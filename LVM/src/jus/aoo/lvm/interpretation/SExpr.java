@@ -5,5 +5,8 @@ package jus.aoo.lvm.interpretation;
  */
 public interface SExpr
 {
-	
+	/**
+	 * Evaluation de la SExpr
+	 */
+	public String evaluation();
 }
