@@ -5,7 +5,7 @@ package jus.aoo.lvm.interpretation;
  * 		- Une référence vers un autre SCons (si composé de liste)
  * 		- Un symbole pour une valeur directe
  */
-public class SCons extends Atome implements SList
+public class SCons implements SList
 {
 	
 }

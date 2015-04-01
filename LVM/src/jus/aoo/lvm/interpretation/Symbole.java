@@ -1,14 +1,12 @@
 package jus.aoo.lvm.interpretation;
 
-public class Symbole extends Atome implements SList
+public class Symbole extends Atome
 {
-	/**
-	 * 
-	 */
-	private String value;
-	
-	public String toString()
+
+	@Override
+	public String evaluation()
 	{
-		return this.value;
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
