@@ -7,5 +7,11 @@ package jus.aoo.lvm.interpretation;
  */
 public class SCons implements SList
 {
+	//attributs car et cdr
+	
+	//fonctions publiques
+	
+	//sexpr Car(..)
+	//sexpr cdr(...)
 	
 }

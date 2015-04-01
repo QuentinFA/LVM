@@ -10,5 +10,7 @@ public interface SExpr
 	 */
 	
 	//ajout des predicats Eq et Atom
+	//ajout de la methode evaluation
+	//ajout de la classe contexte (utiliser liste de hashmap)
 	public String evaluation();
 }
