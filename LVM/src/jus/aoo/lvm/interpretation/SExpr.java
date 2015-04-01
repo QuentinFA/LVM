@@ -8,5 +8,7 @@ public interface SExpr
 	/**
 	 * Evaluation de la SExpr
 	 */
+	
+	//ajout des predicats Eq et Atom
 	public String evaluation();
 }
