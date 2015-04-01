@@ -1,10 +1,10 @@
 /***************************************************
  * Projet LVM
- * Approche OrientÃ©e Objet
+ * Approche Orientée Objet
  * RICM3 - 2014/2015
  * Antoine BLANC - Quentin FAURE
  * Yacine NDIAYE - Florian POPEK
  **************************************************/
  
  Constitution du package jus.aoo.lvm.interpretation :
- 	- ReprÃ©sente le langage Lisp
+ 	- Représente le langage Lisp
