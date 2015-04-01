@@ -8,9 +8,8 @@ public interface SExpr
 	/**
 	 * Evaluation de la SExpr
 	 */
+	public SExpr eval();
 	
-	//ajout des predicats Eq et Atom
-	//ajout de la methode evaluation
-	//ajout de la classe contexte (utiliser liste de hashmap)
-	public String evaluation();
+	public SExpr car() throws LispException;
+	public SExpr cdr() throws LispException;
 }
