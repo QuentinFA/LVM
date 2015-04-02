@@ -9,6 +9,11 @@ public class SCons implements SList
 {
 	private SExpr car;
 	private SExpr cdr;
+	
+	public SCons(SExpr car, SExpr cdr){
+		this.car=car;
+		this.cdr=cdr;
+	}
 
 	@Override
 	public SExpr eval()
@@ -30,5 +35,13 @@ public class SCons implements SList
 		// TODO Auto-generated method stub
 		return cdr;
 	}
+
+	@Override
+	public SExpr cons(SExpr e) throws LispException {
+		// TODO Auto-generated method stub
+		return new SCons(e,this);
+	}
+	
+
 	
 }

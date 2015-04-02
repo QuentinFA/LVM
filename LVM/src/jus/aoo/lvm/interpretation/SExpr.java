@@ -12,4 +12,5 @@ public interface SExpr
 	
 	public SExpr car() throws LispException;
 	public SExpr cdr() throws LispException;
+	public SExpr cons(SExpr e) throws LispException;
 }
