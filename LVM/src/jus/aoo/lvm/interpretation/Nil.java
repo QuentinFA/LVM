@@ -37,9 +37,8 @@ public class Nil extends Atome implements SList
 	}
 
 	@Override
-	public SExpr cons(SExpr e) throws LispException {
-		// TODO Auto-generated method stub
-		
-			return new SCons(e,this);
+	public SExpr cons(SExpr e) throws LispException 
+	{
+			return new SCons(this, e);
 	}
 }
