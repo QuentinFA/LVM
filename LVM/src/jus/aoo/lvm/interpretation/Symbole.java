@@ -5,7 +5,7 @@ public class Symbole extends Atome
 	@Override
 	public SExpr eval() 
 	{
-		// TODO Auto-generated method stub
+		// TODO Liens avec le contexte
 		return null;
 	}
 

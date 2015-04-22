@@ -39,6 +39,6 @@ public class Nil extends Atome implements SList
 	@Override
 	public SExpr cons(SExpr e) throws LispException 
 	{
-			return new SCons(this, e);
+			return new SCons(Nil.NIL, e);
 	}
 }
