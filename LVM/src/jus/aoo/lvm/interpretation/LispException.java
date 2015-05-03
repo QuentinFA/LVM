@@ -3,13 +3,11 @@ package jus.aoo.lvm.interpretation;
 public class LispException extends RuntimeException
 {
 
-	public LispException(String string) 
-	{
+	public LispException(String string) {
 		// TODO Auto-generated constructor stub
 	}
 
-	public LispException() 
-	{
+	public LispException() {
 		// TODO Auto-generated constructor stub
 	}
 

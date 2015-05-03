@@ -6,11 +6,15 @@ package jus.aoo.lvm.interpretation;
 public interface SExpr
 {
 	/**
-	 * Evaluation de la SExpr
+	 * Evaluer l'expression
 	 */
 	public SExpr eval();
 	
+	/**
+	 * Renvoie la chaîne de caractères associèes
+	 */
+	public String toString();
+	
 	public SExpr car() throws LispException;
 	public SExpr cdr() throws LispException;
-	public SExpr cons(SExpr e);
 }

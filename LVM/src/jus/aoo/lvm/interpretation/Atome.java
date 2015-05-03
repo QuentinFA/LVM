@@ -2,13 +2,13 @@ package jus.aoo.lvm.interpretation;
 
 public abstract class Atome implements SExpr
 {
-	public SExpr car()
-	{
-		throw new LispException();
+	protected String str;
+	
+	public SExpr eval() {
+		return this;
 	}
-
-	public SExpr cdr()
-	{
-		throw new LispException();
+	
+	public String toString() {
+		return str;
 	}
 }

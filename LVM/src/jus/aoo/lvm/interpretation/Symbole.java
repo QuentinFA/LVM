@@ -1,17 +1,15 @@
 package jus.aoo.lvm.interpretation;
+import jus.aoo.lvm.environment.Context;
 
 public class Symbole extends Atome
 {
-	@Override
-	public SExpr eval() 
-	{
-		// TODO Liens avec le contexte
-		return null;
+	public static final SExpr TRUE = new Symbole("t");
+	
+	public Symbole(String s) {
+		str = s;
+		Context.addVar(str, this);
 	}
-
-	@Override
-	public SExpr cons(SExpr e) throws LispException 
-	{
-		return new SCons(this, e);
-	}
+	
+	public SExpr car() throws LispException {throw new LispException();}
+	public SExpr cdr() throws LispException {throw new LispException();}
 }
