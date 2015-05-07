@@ -1,5 +1,7 @@
 package jus.aoo.lvm.environment;
+
 import jus.aoo.lvm.interpretation.*;
+import jus.aoo.lvm.interpretation.FSUBR.*;
 import jus.aoo.lvm.interpretation.SUBR.*;
 
 public class LVM {
@@ -11,26 +13,30 @@ public class LVM {
 		Context.addVar("atom", new ATOM());
 		Context.addVar("eq", new EQ());
 		Context.addVar("cons", new CONS());
+		Context.addVar("eval", new EVAL());
+		
+		Context.addVar("quote", new QUOTE());
 	}
 	
 	public static void main(String[] args)
 	{
 		initialiser();
-		SExpr lol = new Symbole("a");
 		
-		//(eq lol lol) -> t
-		SExpr test = new SCons(new EQ(), new SCons(lol, new SCons(lol, Nil.NIL)));
-		//(cdr (a b)) -> b
-		SExpr test2 = new SCons(new CDR(), new SCons(new SCons(new Symbole("a"), new SCons(new Symbole("b"), Nil.NIL)), Nil.NIL));
-		//(a.a) -> (a.a)
-		SExpr test3 = new SCons(lol, lol);
-		//((a b) (c d)) -> ((a b) (c d))
-		SExpr test4 = new SCons(new SCons(new Symbole("a"), new SCons(new Symbole("b"), Nil.NIL)), 
-				                new SCons(new Symbole("c"), new SCons(new Symbole("d"), Nil.NIL)));
+		SExpr test = new SCons(new EVAL(), new SCons(new SCons(new CAR(), new SCons(new Symbole("a"), new Symbole("b"))), Nil.NIL));
 		
-		System.out.println("(" + test.toString() + ")" + " -> " + test.eval().toString());
-		System.out.println("(" + test2.toString() + ")" + " -> " + test2.eval().toString());
-		System.out.println("(" + test3.toString() + ")" + " -> " + test3.eval().toString());
-		System.out.println("(" + test4.toString() + ")" + " -> " + test4.eval().toString());
+		if (test instanceof Atome)
+		{
+			if (test.eval() instanceof Atome)
+				System.out.println(test.toString() + " -> " + test.eval().toString());
+			else
+				System.out.println(test.toString() + " -> " + "(" + test.eval().toString() + ")");
+		}
+		else
+		{
+			if (test.eval() instanceof Atome)
+				System.out.println("(" + test.toString() + ")" + " -> " + test.eval().toString());
+			else
+				System.out.println("(" + test.toString() + ")" + " -> " + "(" + test.eval().toString() + ")");
+		}
 	}
 }

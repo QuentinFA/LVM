@@ -1,5 +1,7 @@
 package jus.aoo.lvm.interpretation;
 
+import jus.aoo.lvm.environment.LispException;
+
 /**
  * Interface représentant les éléments du langage Lisp
  */

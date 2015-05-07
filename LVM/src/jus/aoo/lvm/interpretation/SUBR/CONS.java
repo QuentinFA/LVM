@@ -1,5 +1,6 @@
 package jus.aoo.lvm.interpretation.SUBR;
 import jus.aoo.lvm.environment.Context;
+import jus.aoo.lvm.environment.LispException;
 import jus.aoo.lvm.interpretation.*;
 
 public class CONS extends Subr 
@@ -14,8 +15,8 @@ public class CONS extends Subr
 	 * @param SExpr arg2
 	 */
 	public SExpr apply() throws LispException {
-		SExpr arg1 = Context.get("arg1");
-		SExpr arg2 = Context.get("arg2");
+		SExpr arg1 = eval_arg(Context.get("arg1"));
+		SExpr arg2 = eval_arg(Context.get("arg2"));
 		
 		return new SCons(arg1, arg2);
 	}

@@ -1,5 +1,5 @@
 package jus.aoo.lvm.interpretation;
-import jus.aoo.lvm.environment.Context;
+import jus.aoo.lvm.environment.LispException;
 
 /**
  * Représente le symbole nil () en Lisp
@@ -10,7 +10,6 @@ public class Nil extends Atome implements SList
 	
 	private Nil() {
 		str = "()";
-		Context.addVar(str, this);
 	}
 
 	//PRIMITIVE	

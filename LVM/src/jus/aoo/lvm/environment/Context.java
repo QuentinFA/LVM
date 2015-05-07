@@ -5,58 +5,54 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import jus.aoo.lvm.interpretation.SExpr;
-import jus.aoo.lvm.interpretation.Symbole;
+import jus.aoo.lvm.interpretation.*;
 
 /**
- * ReprÃ©sente le stockage des variables et de leur valeur.</br>
- * Le contexte est reprÃ©sentÃ© sous forme de "pile" de HashMap, afin de pouvoir crÃ©er des variables avec
- * des noms dÃ©jÃ  existant sans effacer les anciennes valeurs 
- * (notamment pour le passage de paramÃ¨tres fonctionnels / paramÃ¨tres effectifs).
+ * Représente le stockage des variables et de leur valeur.</br>
+ * Le contexte est représenté sous forme de "pile" de HashMap, afin de pouvoir créer des variables avec
+ * des noms déjà existant sans effacer les anciennes valeurs 
+ * (notamment pour le passage de paramètres fonctionnels / paramètres effectifs).
  */
 public class Context
 {
-	private static List<Map<Symbole, SExpr>> ctx;
-	
+	private static List<Map<String, SExpr>> ctx;
 	public static final Context CONTEXT = new Context();
 	
 	private Context()
 	{
-		ctx = new ArrayList<Map<Symbole, SExpr>>();
-		ctx.add(new HashMap<Symbole, SExpr>());
+		ctx = new ArrayList<Map<String, SExpr>>();
+		ctx.add(new HashMap<String, SExpr>());
 	}
 	
 	/**
-	 * Fonction de rÃ©cupÃ©ration d'une valeur Ã  partir d'un symbole dans le contexte
-	 * @param s : Le symbole dont ont veut rÃ©cupÃ©rer la valeur associÃ©e
-	 * @return SExpr correspondante, ou null si non prÃ©sente
+	 * Fonction de récupération d'une valeur à partir d'un String dans le contexte
+	 * @param s : Le String dont ont veut récupérer la valeur associée
+	 * @return SExpr correspondante, ou null si non présente
 	 */
 	public static SExpr get(String s)
 	{
-		SExpr r;
-		
 		for(int i = ctx.size() - 1; i >= 0; i--)
 		{
-			if((r = ctx.get(i).get(s)) != null)
-				return r;
+			if(ctx.get(i).containsKey(s))
+				return ctx.get(i).get(s);
 		}
 		
 		return null;
 	}
 	
 	/**
-	 * Ajout d'un symbole et de sa valeur dans le contexte</br>
-	 * S'il est dÃ©jÃ  prÃ©sent, un nouveau contexte contenant la nouvelle valeur est ajoutÃ©,
-	 * sinon, il est simplement ajoutÃ© dans le contexte actuel.</br>
-	 * UtilisÃ© pour passer les paramÃ tres Ã  une fonction.
-	 * @param s : Le symbole Ã  ajouter
+	 * Ajout d'un String et de sa valeur dans le contexte</br>
+	 * S'il est déjà présent, un nouveau contexte contenant la nouvelle valeur est ajouté,
+	 * sinon, il est simplement ajouté dans le contexte actuel.</br>
+	 * Utilisé pour passer les paramètres à une fonction.
+	 * @param s : Le String à ajouter
 	 * @param v : La valeur correspondante
 	 */
-	public static void addFVar(Symbole s, SExpr v)
+	public static void addFVar(String s, SExpr v)
 	{
 		if(ctx.get(ctx.size() - 1).get(s) != null)
 		{
-			Map<Symbole, SExpr> newCtx = new HashMap<Symbole, SExpr>();
+			Map<String, SExpr> newCtx = new HashMap<String, SExpr>();
 			newCtx.put(s, v);
 			ctx.add(newCtx);
 		}
@@ -66,22 +62,22 @@ public class Context
 	
 	/**
 	 * Fonction d'ajout d'une variable.</br>
-	 * Si ce nom de variable est dÃ©jÃ  utilisÃ©, alors la valeur correspondante est remplacÃ©e par la nouvelle.
-	 * @param s : Le symbole auquel associer la valeur
-	 * @param v : La valeur correspondant au symbole
+	 * Si ce nom de variable est déjà utilisé, alors la valeur correspondante est remplacée par la nouvelle.
+	 * @param s : Le String auquel associer la valeur
+	 * @param v : La valeur correspondant au String
 	 */
-	public static void addVar(Symbole s, SExpr v)
+	public static void addVar(String s, SExpr v)
 	{
 		ctx.get(ctx.size() - 1).put(s, v);
 	}
 	
 	/**
-	 * EnlÃ¨ve un lien d'un symbole et une valeur du contexte.</br>
-	 * Si le contexte le plus haut est vide (et diffÃ©rent du contexte de base), il est effacÃ©.</br>
-	 * UtilisÃ© pour effacer les variables ajoutÃ©es aprÃ©s un passage de paramÃ¨tre Ã  une fonction.
-	 * @param s : Le Symbole Ã  effacer
+	 * Enlève un lien d'un String et une valeur du contexte.</br>
+	 * Si le contexte le plus haut est vide (et différent du contexte de base), il est effacé.</br>
+	 * Utilisé pour effacer les variables ajoutées après un passage de paramètre à une fonction.
+	 * @param s : Le String à effacer
 	 */
-	public static void delVar(Symbole s)
+	public static void delVar(String s)
 	{
 		int i = ctx.size() - 1;
 		
