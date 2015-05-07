@@ -100,20 +100,22 @@ public static SExpr importe(String s) throws LispException, FileNotFoundExceptio
     try {
  SList l1,l2; Symbole a;
       if (jj_2_4(2)) {
+        jj_consume_token(QUOTE);
+      } else if (jj_2_5(2)) {
         jj_consume_token(PAROUV);
         l1 = liste();
         jj_consume_token(PAREF);
         l2 = liste();
-                                                         {if (true) return new SCons(l1, l2);}
-      } else if (jj_2_5(2)) {
+                                                           {if (true) return new SCons(l1, l2);}
+      } else if (jj_2_6(2)) {
         jj_consume_token(PAROUV);
         jj_consume_token(PAREF);
         l1 = liste();
-                                           {if (true) return new SCons(l1,Nil.NIL);}
-      } else if (jj_2_6(2)) {
+                                           {if (true) return new SCons(Nil.NIL, l1);}
+      } else if (jj_2_7(2)) {
         a = Atome();
         l1 = liste();
-                                    {if (true) return new SCons(l1, a);}
+                                    {if (true) return new SCons(a, l1);}
       } else {
            {if (true) return  (SList ) Nil.NIL;}
       }
@@ -177,6 +179,37 @@ public static SExpr importe(String s) throws LispException, FileNotFoundExceptio
     finally { jj_save(5, xla); }
   }
 
+  private boolean jj_2_7(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_7(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(6, xla); }
+  }
+
+  private boolean jj_3R_3() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_4()) {
+    jj_scanpos = xsp;
+    if (jj_3_5()) {
+    jj_scanpos = xsp;
+    if (jj_3_6()) {
+    jj_scanpos = xsp;
+    if (jj_3_7()) {
+    jj_scanpos = xsp;
+    if (jj_3R_5()) return true;
+    }
+    }
+    }
+    }
+    return false;
+  }
+
+  private boolean jj_3_4() {
+    if (jj_scan_token(QUOTE)) return true;
+    return false;
+  }
+
   private boolean jj_3R_1() {
     if (jj_3R_4()) return true;
     return false;
@@ -202,7 +235,7 @@ public static SExpr importe(String s) throws LispException, FileNotFoundExceptio
     return false;
   }
 
-  private boolean jj_3_6() {
+  private boolean jj_3_7() {
     if (jj_3R_1()) return true;
     if (jj_3R_3()) return true;
     return false;
@@ -211,7 +244,12 @@ public static SExpr importe(String s) throws LispException, FileNotFoundExceptio
   private boolean jj_3_3() {
     if (jj_scan_token(PAROUV)) return true;
     if (jj_3R_3()) return true;
-    if (jj_scan_token(PAREF)) return true;
+    return false;
+  }
+
+  private boolean jj_3_5() {
+    if (jj_scan_token(PAROUV)) return true;
+    if (jj_3R_3()) return true;
     return false;
   }
 
@@ -220,31 +258,8 @@ public static SExpr importe(String s) throws LispException, FileNotFoundExceptio
     return false;
   }
 
-  private boolean jj_3_5() {
+  private boolean jj_3_6() {
     if (jj_scan_token(PAROUV)) return true;
-    if (jj_scan_token(PAREF)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_3() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_4()) {
-    jj_scanpos = xsp;
-    if (jj_3_5()) {
-    jj_scanpos = xsp;
-    if (jj_3_6()) {
-    jj_scanpos = xsp;
-    if (jj_3R_5()) return true;
-    }
-    }
-    }
-    return false;
-  }
-
-  private boolean jj_3_4() {
-    if (jj_scan_token(PAROUV)) return true;
-    if (jj_3R_3()) return true;
     if (jj_scan_token(PAREF)) return true;
     return false;
   }
@@ -273,7 +288,7 @@ public static SExpr importe(String s) throws LispException, FileNotFoundExceptio
    private static void jj_la1_init_1() {
       jj_la1_1 = new int[] {};
    }
-  final private JJCalls[] jj_2_rtns = new JJCalls[6];
+  final private JJCalls[] jj_2_rtns = new JJCalls[7];
   private boolean jj_rescan = false;
   private int jj_gc = 0;
 
@@ -546,7 +561,7 @@ public static SExpr importe(String s) throws LispException, FileNotFoundExceptio
 
   private void jj_rescan_token() {
     jj_rescan = true;
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 7; i++) {
     try {
       JJCalls p = jj_2_rtns[i];
       do {
@@ -559,6 +574,7 @@ public static SExpr importe(String s) throws LispException, FileNotFoundExceptio
             case 3: jj_3_4(); break;
             case 4: jj_3_5(); break;
             case 5: jj_3_6(); break;
+            case 6: jj_3_7(); break;
           }
         }
         p = p.next;

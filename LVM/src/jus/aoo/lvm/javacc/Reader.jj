@@ -131,11 +131,11 @@ SList liste() throws LispException:
 {SList l1,l2; Symbole a;}
  
 {
-  	
-	 < PAROUV > l1 = liste() < PAREF > l2 = liste() {return new SCons(l1, l2);} 
-	|< PAROUV > < PAREF> l1 = liste() {return new SCons(l1,Nil.NIL);} 
-	| a = Atome() l1 = liste() {return new SCons(l1, a);} 
-	| {return  (SList ) Nil.NIL;}
+  	 < QUOTE > 
+	|  < PAROUV > l1 = liste() < PAREF > l2 = liste() {return new SCons(l1, l2);} //2 listes
+	|< PAROUV > < PAREF> l1 = liste() {return new SCons(Nil.NIL, l1);} // Nil et liste
+	| a = Atome() l1 = liste() {return new SCons(a, l1);} // atome et liste
+	| {return  (SList ) Nil.NIL;} //par défaut 
 }
 
 
