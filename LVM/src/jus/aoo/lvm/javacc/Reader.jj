@@ -101,6 +101,10 @@ SExpr lecture_term() throws LispException:
    } 
    |< PAROUV > l=liste() < PAREF >   {
      return l;   }
+   |< QUOTE > s = lecture_term()
+   {
+     return new SCons (new Symbole ("quote"), new SCons( s, Nil.NIL));
+   }
   
     }
 
@@ -128,11 +132,11 @@ Symbole chaine() throws LispException:
 
 SList liste() throws LispException:
 
-{SList l1,l2; Symbole a;}
+{SList l1,l2; Symbole a; SExpr s;}
  
 {
-  	 < QUOTE > 
-	|  < PAROUV > l1 = liste() < PAREF > l2 = liste() {return new SCons(l1, l2);} //2 listes
+  	 < QUOTE >  s = lecture_term() {return new SCons (new Symbole ("quote"), new SCons( s, Nil.NIL));}
+	|< PAROUV > l1 = liste() < PAREF > l2 = liste() {return new SCons(l1, l2);} //2 listes
 	|< PAROUV > < PAREF> l1 = liste() {return new SCons(Nil.NIL, l1);} // Nil et liste
 	| a = Atome() l1 = liste() {return new SCons(a, l1);} // atome et liste
 	| {return  (SList ) Nil.NIL;} //par défaut 

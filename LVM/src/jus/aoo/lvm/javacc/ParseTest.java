@@ -19,7 +19,7 @@ public class ParseTest {
 			//SExpr expr= parser.read(s);
 			  SExpr expr = parser.importe("C:\\test.txt");
 			
-			System.out.println("Test du string:" + expr.eval().toString()  ); 
+			System.out.println("lecture du fichier, evaluation et affichage:" + expr.eval().toString()  ); 
 			
 
 	}
