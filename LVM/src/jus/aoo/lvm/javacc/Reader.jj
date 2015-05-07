@@ -8,6 +8,8 @@
 	FORCE_LA_CHECK=false; }PARSER_BEGIN(Reader)
 package jus.aoo.lvm.javacc;
  import jus.aoo.lvm.interpretation.*;
+ import jus.aoo.lvm.environment.*;
+ 
  import java.io.*;
 public class Reader{
 
