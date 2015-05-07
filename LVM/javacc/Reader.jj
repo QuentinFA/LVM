@@ -2,8 +2,9 @@
  * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.5.0+
  */options{	DEBUG_PARSER=false;
 	STATIC=false;}PARSER_BEGIN(Reader)
-//package <le package de déclaration> ;
+//package <le package de dï¿½claration> ;
  import jus.aoo.lvm.interpretation;
+ import jus.aoo.lvm.environment;
 public class Reader{
 
 /** le support de lecture */
@@ -15,8 +16,8 @@ protected static java.io.Reader in = new BufferedReader(new InputStreamReader(Sy
 public static Sexpr read() throws LispException{
 	return (lecture_term());
  }
-/** lecture d'une S-EXPR à partir de la chaîne
-* @param s : la chaîne
+/** lecture d'une S-EXPR ï¿½ partir de la chaï¿½ne
+* @param s : la chaï¿½ne
 * @return Sexpr : la Sexpr construite.
 * @throws LispException une erreur de syntaxe
 */
@@ -24,7 +25,7 @@ public static Sexpr read(String s) throws LispException{
 
   return (lecture_chaine(s));
  }
-/** évaluation de la séquence S-EXPRs à partir du fichier s
+/** ï¿½valuation de la sï¿½quence S-EXPRs ï¿½ partir du fichier s
 * @param s : le nom du fichier
 * @return Sexpr : symbole du nom du fichier.
 * @throws LispException une erreur de lecture
@@ -34,10 +35,10 @@ public static Sexpr importe(String s) throws LispException{
  }
 }
 PARSER_END(Reader)
-// les caractères ignorés
+// les caractï¿½res ignorï¿½s
 SKIP :
 {
-" " | "\t" | "\r"| "\n" // attention élimine la notion de fin de ligne
+" " | "\t" | "\r"| "\n" // attention ï¿½limine la notion de fin de ligne
 | "\u0000" | "\u0001" | "\u0002" | "\u0003" | "\u0004" | "\u0005" | "\u0006" | "\u0007"
 | "\u0008" | "\u000B" | "\u000C" | "\u000E" | "\u000F" | "\u0010" | "\u0011" | "\u0012"
 | "\u0013" | "\u0014" | "\u0015" | "\u0016" | "\u0017" | "\u0018" | "\u0019" | "\u001A"
@@ -50,7 +51,7 @@ MORE :
 }
 <IN_SL_COMMENT> SPECIAL_TOKEN :{<SL_COMMENT: "\n" | "\r" | "\r\n"> : DEFAULT}
 <IN_ML_COMMENT> SPECIAL_TOKEN :{<ML_COMMENT: "*/" > : DEFAULT}
-<IN_SL_COMMENT,IN_ML_COMMENT> SKIP :{< ~[] >}// les lexèmes du langage
+<IN_SL_COMMENT,IN_ML_COMMENT> SKIP :{< ~[] >}// les lexï¿½mes du langage
 
 TOKEN [IGNORE_CASE]:
 {
@@ -67,9 +68,9 @@ TOKEN [IGNORE_CASE]:
 
 
 }
-  //Définir les lexèmes du langage
+  //Dï¿½finir les lexï¿½mes du langage
 
-// les règles de grammaire de ce langage
+// les rï¿½gles de grammaire de ce langage
 Sexpr lecture_term():
 {
   //used variables
@@ -87,7 +88,7 @@ Symbole Atome():
 
 {
   	//a = < CHAINE >
-   // return new Symbole(a.image) nouvel objet atome(pas encore de constructeur défini);}
+   // return new Symbole(a.image) nouvel objet atome(pas encore de constructeur dï¿½fini);}
 
 SList liste():
 {SList l1,l2; Symbole a; Nil n;}
