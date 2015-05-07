@@ -1,6 +1,8 @@
 package jus.aoo.lvm.environment;
 
+import jus.aoo.lvm.interpretation.Nil;
 import jus.aoo.lvm.interpretation.SExpr;
+import jus.aoo.lvm.interpretation.Symbole;
 import jus.aoo.lvm.interpretation.FSUBR.QUOTE;
 import jus.aoo.lvm.interpretation.SUBR.ATOM;
 import jus.aoo.lvm.interpretation.SUBR.CAR;
@@ -13,8 +15,17 @@ import jus.aoo.lvm.javacc.Reader;
 
 public class LVM {
 	
-	private static void initialiser()
+	protected static void initialiser()
 	{
+		
+		//initialisation des variables
+
+		Context.addVar("()", Nil.NIL);
+		Context.addVar("'", new Symbole("quote"));
+		Context.addVar("vrai", new Symbole("t"));
+		Context.addVar("faux", Nil.NIL);
+		
+		//fonctions et predicats
 		Context.addVar("car", new CAR());
 		Context.addVar("cdr", new CDR());
 		Context.addVar("atom", new ATOM());
@@ -25,6 +36,11 @@ public class LVM {
 		
 		// TODO Ajouter T
 	}
+	
+	protected LVM(){
+		initialiser();
+	}
+	
 	
 	public static void main(String[] args)
 	{

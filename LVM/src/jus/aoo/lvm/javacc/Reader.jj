@@ -89,9 +89,9 @@ TOKEN [IGNORE_CASE]:
 SExpr lecture_term() throws LispException:
 {
   //used variables
- Symbole atome; SList l; SExpr s; Nil n;}
+ Symbole atome; SList l; SExpr s, s1,s2; Nil n;}
 {
-   atome= Atome()
+   atome= Atome()  (s1 = lecture_term())*
    {
      return atome;
    }
@@ -105,7 +105,7 @@ SExpr lecture_term() throws LispException:
    {
      return new SCons (new Symbole ("quote"), new SCons( s, Nil.NIL));
    }
-  
+   
     }
 
 Symbole Atome() throws LispException:

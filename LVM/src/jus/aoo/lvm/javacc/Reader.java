@@ -49,19 +49,28 @@ public static SExpr importe(String s) throws LispException, FileNotFoundExceptio
     trace_call("lecture_term");
     try {
   //used variables
- Symbole atome; SList l; SExpr s; Nil n;
-      if (jj_2_1(2)) {
+ Symbole atome; SList l; SExpr s, s1,s2; Nil n;
+      if (jj_2_2(2)) {
         atome = Atome();
+        label_1:
+        while (true) {
+          if (jj_2_1(2)) {
+            ;
+          } else {
+            break label_1;
+          }
+          s1 = lecture_term();
+        }
      {if (true) return atome;}
-      } else if (jj_2_2(2)) {
+      } else if (jj_2_3(2)) {
         n = NIL();
      {if (true) return n;}
-      } else if (jj_2_3(2)) {
+      } else if (jj_2_4(2)) {
         jj_consume_token(PAROUV);
         l = liste();
         jj_consume_token(PAREF);
      {if (true) return l;}
-      } else if (jj_2_4(2)) {
+      } else if (jj_2_5(2)) {
         jj_consume_token(QUOTE);
         s = lecture_term();
      {if (true) return new SCons (new Symbole ("quote"), new SCons( s, Nil.NIL));}
@@ -103,22 +112,22 @@ public static SExpr importe(String s) throws LispException, FileNotFoundExceptio
     trace_call("liste");
     try {
  SList l1,l2; Symbole a; SExpr s;
-      if (jj_2_5(2)) {
+      if (jj_2_6(2)) {
         jj_consume_token(QUOTE);
         s = lecture_term();
                                         {if (true) return new SCons (new Symbole ("quote"), new SCons( s, Nil.NIL));}
-      } else if (jj_2_6(2)) {
+      } else if (jj_2_7(2)) {
         jj_consume_token(PAROUV);
         l1 = liste();
         jj_consume_token(PAREF);
         l2 = liste();
                                                          {if (true) return new SCons(l1, l2);}
-      } else if (jj_2_7(2)) {
+      } else if (jj_2_8(2)) {
         jj_consume_token(PAROUV);
         jj_consume_token(PAREF);
         l1 = liste();
                                            {if (true) return new SCons(Nil.NIL, l1);}
-      } else if (jj_2_8(2)) {
+      } else if (jj_2_9(2)) {
         a = Atome();
         l1 = liste();
                                     {if (true) return new SCons(a, l1);}
@@ -199,79 +208,96 @@ public static SExpr importe(String s) throws LispException, FileNotFoundExceptio
     finally { jj_save(7, xla); }
   }
 
-  private boolean jj_3R_4() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_1()) {
-    jj_scanpos = xsp;
-    if (jj_3_2()) {
-    jj_scanpos = xsp;
-    if (jj_3_3()) {
-    jj_scanpos = xsp;
-    if (jj_3_4()) return true;
-    }
-    }
-    }
-    return false;
+  private boolean jj_2_9(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_9(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(8, xla); }
   }
 
-  private boolean jj_3R_2() {
+  private boolean jj_3R_4() {
     if (jj_scan_token(PAROUV)) return true;
     if (jj_scan_token(PAREF)) return true;
     return false;
   }
 
-  private boolean jj_3_1() {
-    if (jj_3R_1()) return true;
+  private boolean jj_3R_2() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_2()) {
+    jj_scanpos = xsp;
+    if (jj_3_3()) {
+    jj_scanpos = xsp;
+    if (jj_3_4()) {
+    jj_scanpos = xsp;
+    if (jj_3_5()) return true;
+    }
+    }
+    }
     return false;
   }
 
-  private boolean jj_3R_5() {
-    if (jj_scan_token(CHAINE)) return true;
+  private boolean jj_3_2() {
+    if (jj_3R_3()) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3_1()) { jj_scanpos = xsp; break; }
+    }
     return false;
   }
 
   private boolean jj_3R_6() {
+    if (jj_scan_token(CHAINE)) return true;
+    return false;
+  }
+
+  private boolean jj_3_1() {
+    if (jj_3R_2()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_7() {
+    return false;
+  }
+
+  private boolean jj_3_9() {
+    if (jj_3R_3()) return true;
+    if (jj_3R_5()) return true;
+    return false;
+  }
+
+  private boolean jj_3_5() {
+    if (jj_scan_token(QUOTE)) return true;
+    if (jj_3R_2()) return true;
     return false;
   }
 
   private boolean jj_3_8() {
-    if (jj_3R_1()) return true;
-    if (jj_3R_3()) return true;
-    return false;
-  }
-
-  private boolean jj_3_4() {
-    if (jj_scan_token(QUOTE)) return true;
-    if (jj_3R_4()) return true;
+    if (jj_scan_token(PAROUV)) return true;
+    if (jj_scan_token(PAREF)) return true;
     return false;
   }
 
   private boolean jj_3_7() {
     if (jj_scan_token(PAROUV)) return true;
+    if (jj_3R_5()) return true;
     if (jj_scan_token(PAREF)) return true;
     return false;
   }
 
-  private boolean jj_3_6() {
-    if (jj_scan_token(PAROUV)) return true;
-    if (jj_3R_3()) return true;
-    if (jj_scan_token(PAREF)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_3() {
+  private boolean jj_3R_5() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_5()) {
-    jj_scanpos = xsp;
     if (jj_3_6()) {
     jj_scanpos = xsp;
     if (jj_3_7()) {
     jj_scanpos = xsp;
     if (jj_3_8()) {
     jj_scanpos = xsp;
-    if (jj_3R_6()) return true;
+    if (jj_3_9()) {
+    jj_scanpos = xsp;
+    if (jj_3R_7()) return true;
     }
     }
     }
@@ -279,26 +305,26 @@ public static SExpr importe(String s) throws LispException, FileNotFoundExceptio
     return false;
   }
 
-  private boolean jj_3_5() {
+  private boolean jj_3_6() {
     if (jj_scan_token(QUOTE)) return true;
-    if (jj_3R_4()) return true;
-    return false;
-  }
-
-  private boolean jj_3_3() {
-    if (jj_scan_token(PAROUV)) return true;
-    if (jj_3R_3()) return true;
-    if (jj_scan_token(PAREF)) return true;
-    return false;
-  }
-
-  private boolean jj_3_2() {
     if (jj_3R_2()) return true;
     return false;
   }
 
-  private boolean jj_3R_1() {
+  private boolean jj_3_4() {
+    if (jj_scan_token(PAROUV)) return true;
     if (jj_3R_5()) return true;
+    if (jj_scan_token(PAREF)) return true;
+    return false;
+  }
+
+  private boolean jj_3_3() {
+    if (jj_3R_4()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_3() {
+    if (jj_3R_6()) return true;
     return false;
   }
 
@@ -326,7 +352,7 @@ public static SExpr importe(String s) throws LispException, FileNotFoundExceptio
    private static void jj_la1_init_1() {
       jj_la1_1 = new int[] {};
    }
-  final private JJCalls[] jj_2_rtns = new JJCalls[8];
+  final private JJCalls[] jj_2_rtns = new JJCalls[9];
   private boolean jj_rescan = false;
   private int jj_gc = 0;
 
@@ -599,7 +625,7 @@ public static SExpr importe(String s) throws LispException, FileNotFoundExceptio
 
   private void jj_rescan_token() {
     jj_rescan = true;
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 9; i++) {
     try {
       JJCalls p = jj_2_rtns[i];
       do {
@@ -614,6 +640,7 @@ public static SExpr importe(String s) throws LispException, FileNotFoundExceptio
             case 5: jj_3_6(); break;
             case 6: jj_3_7(); break;
             case 7: jj_3_8(); break;
+            case 8: jj_3_9(); break;
           }
         }
         p = p.next;
