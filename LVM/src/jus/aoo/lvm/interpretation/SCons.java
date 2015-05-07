@@ -15,7 +15,7 @@ public class SCons implements SList
 
 	public String toString() 
 	{
-		if (car instanceof Symbole && cdr instanceof Symbole) //Paire pointée
+		if (car instanceof Symbole && cdr instanceof Symbole) //Paire pointï¿½e
 			return car.toString() + "." + cdr.toString();
 		
 		if (car instanceof SCons)
@@ -38,7 +38,7 @@ public class SCons implements SList
 		}
 	}
 	
-	public SCons(SExpr car, SExpr cdr) 
+	public SCons(SExpr car, SExpr cdr)
 	{	
 		this.car=car;
 		this.cdr=cdr;
@@ -58,7 +58,7 @@ public class SCons implements SList
 			{
 				while (cdr_temp instanceof SCons)
 				{
-					//Liage des paramètres
+					//Liaison des paramÃ¨tres
 					Context.addFVar("arg"+nbr, cdr_temp.car());
 					
 					nbr ++;
