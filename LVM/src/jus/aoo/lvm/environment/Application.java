@@ -12,11 +12,12 @@ public class Application {
 		// TODO Auto-generated method stub
 
 		//Si lecture à partir d'un fichier (TODO: le if correspondant)
-		support= new LectureFichier("C:\\test.txt");
-		support.executer();
+		//support= new LectureFichier("C:\\test.txt");
+		//support.executer();
+		
 		
 		//Si lecture via console (TODO)
-		
+		LVM1 l = new LVM1();
 	}
 
 }

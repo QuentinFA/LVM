@@ -17,7 +17,7 @@ public class ParseTest {
 			//  = new Reader (new FileReader("test.txt"));  
 			//String s = " aejorlf () (dndjdnf () ) dk";
 			//SExpr expr= parser.read(s);
-			  SExpr expr = parser.importe("C:\\test.txt");
+			  SExpr expr = parser.importe("/test.txt");
 			
 			System.out.println("lecture du fichier, evaluation et affichage:" + expr.eval().toString()  ); 
 			

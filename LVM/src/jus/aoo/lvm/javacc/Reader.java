@@ -32,7 +32,7 @@ public static SExpr read(String s) throws LispException, ParseException{
  }
 /** évaluation de la séquence S-EXPRs à partir du fichier s
 * @param s : le nom du fichier
-* @return Sexpr : symbole du nom du fichier.
+* @return Sexpr : la SEXPR construite à partir d'une ligne du fichier.
 * @throws LispException une erreur de lecture
 */
 public static SExpr importe(String s) throws LispException, FileNotFoundException, ParseException{
@@ -40,6 +40,17 @@ public static SExpr importe(String s) throws LispException, FileNotFoundExceptio
         in = new FileReader(s);
     SExpr se= read();
         return (se);
+ }
+
+/** évaluation de la séquence S-EXPRs à partir du fichier s
+* @param s : le nom du fichier
+* @return Sexpr : symbole du nom du fichier.
+* @throws LispException une erreur de lecture
+*/
+
+public static SExpr importeFile(String s) throws LispException, FileNotFoundException, ParseException{
+
+        return (read (s));
  }
 
   //Définir les lexèmes du langage
@@ -215,43 +226,6 @@ public static SExpr importe(String s) throws LispException, FileNotFoundExceptio
     finally { jj_save(8, xla); }
   }
 
-  private boolean jj_3R_4() {
-    if (jj_scan_token(PAROUV)) return true;
-    if (jj_scan_token(PAREF)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_2() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_2()) {
-    jj_scanpos = xsp;
-    if (jj_3_3()) {
-    jj_scanpos = xsp;
-    if (jj_3_4()) {
-    jj_scanpos = xsp;
-    if (jj_3_5()) return true;
-    }
-    }
-    }
-    return false;
-  }
-
-  private boolean jj_3_2() {
-    if (jj_3R_3()) return true;
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3_1()) { jj_scanpos = xsp; break; }
-    }
-    return false;
-  }
-
-  private boolean jj_3R_6() {
-    if (jj_scan_token(CHAINE)) return true;
-    return false;
-  }
-
   private boolean jj_3_1() {
     if (jj_3R_2()) return true;
     return false;
@@ -325,6 +299,43 @@ public static SExpr importe(String s) throws LispException, FileNotFoundExceptio
 
   private boolean jj_3R_3() {
     if (jj_3R_6()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_4() {
+    if (jj_scan_token(PAROUV)) return true;
+    if (jj_scan_token(PAREF)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_2() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_2()) {
+    jj_scanpos = xsp;
+    if (jj_3_3()) {
+    jj_scanpos = xsp;
+    if (jj_3_4()) {
+    jj_scanpos = xsp;
+    if (jj_3_5()) return true;
+    }
+    }
+    }
+    return false;
+  }
+
+  private boolean jj_3_2() {
+    if (jj_3R_3()) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3_1()) { jj_scanpos = xsp; break; }
+    }
+    return false;
+  }
+
+  private boolean jj_3R_6() {
+    if (jj_scan_token(CHAINE)) return true;
     return false;
   }
 

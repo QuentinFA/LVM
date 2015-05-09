@@ -39,7 +39,7 @@ public static SExpr read(String s) throws LispException, ParseException{
  }
 /** évaluation de la séquence S-EXPRs à partir du fichier s
 * @param s : le nom du fichier
-* @return Sexpr : symbole du nom du fichier.
+* @return Sexpr : la SEXPR construite à partir d'une ligne du fichier.
 * @throws LispException une erreur de lecture
 */
 public static SExpr importe(String s) throws LispException, FileNotFoundException, ParseException{
@@ -47,6 +47,17 @@ public static SExpr importe(String s) throws LispException, FileNotFoundExceptio
   	in = new FileReader(s);
     SExpr se= read();
 	return (se);
+ }
+
+/** évaluation de la séquence S-EXPRs à partir du fichier s
+* @param s : le nom du fichier
+* @return Sexpr : symbole du nom du fichier.
+* @throws LispException une erreur de lecture
+*/
+
+public static SExpr importeFile(String s) throws LispException, FileNotFoundException, ParseException{
+
+	return (read (s));
  }
 }
 PARSER_END(Reader)
