@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import jus.aoo.lvm.interpretation.*;
+import jus.aoo.lvm.interpretation.SExpr;
 
 /**
  * Représente le stockage des variables et de leur valeur.</br>

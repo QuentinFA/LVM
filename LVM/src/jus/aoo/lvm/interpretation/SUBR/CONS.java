@@ -1,7 +1,9 @@
 package jus.aoo.lvm.interpretation.SUBR;
 import jus.aoo.lvm.environment.Context;
 import jus.aoo.lvm.environment.LispException;
-import jus.aoo.lvm.interpretation.*;
+import jus.aoo.lvm.interpretation.SCons;
+import jus.aoo.lvm.interpretation.SExpr;
+import jus.aoo.lvm.interpretation.Subr;
 
 public class CONS extends Subr 
 {

@@ -11,29 +11,29 @@ public interface ReaderConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int SL_COMMENT = 37;
+  int SL_COMMENT = 36;
   /** RegularExpression Id. */
-  int ML_COMMENT = 38;
+  int ML_COMMENT = 37;
   /** RegularExpression Id. */
-  int CHAINE = 40;
+  int PAROUV = 39;
   /** RegularExpression Id. */
-  int PAROUV = 41;
+  int PAREF = 40;
   /** RegularExpression Id. */
-  int PAREF = 42;
+  int POINT = 41;
   /** RegularExpression Id. */
-  int POINT = 43;
+  int QUOTE = 42;
   /** RegularExpression Id. */
-  int QUOTE = 44;
+  int CONS = 43;
   /** RegularExpression Id. */
-  int CONS = 45;
+  int CAR = 44;
   /** RegularExpression Id. */
-  int CAR = 46;
+  int CDR = 45;
   /** RegularExpression Id. */
-  int CDR = 47;
+  int ATOM = 46;
   /** RegularExpression Id. */
-  int ATOM = 48;
+  int EQ = 47;
   /** RegularExpression Id. */
-  int EQ = 49;
+  int CHAINE = 48;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -48,7 +48,6 @@ public interface ReaderConstants {
     "\" \"",
     "\"\\t\"",
     "\"\\r\"",
-    "\"\\n\"",
     "\"\\u0000\"",
     "\"\\u0001\"",
     "\"\\u0002\"",
@@ -83,17 +82,17 @@ public interface ReaderConstants {
     "\"/*\"",
     "<SL_COMMENT>",
     "\"*/\"",
-    "<token of kind 39>",
-    "<CHAINE>",
+    "<token of kind 38>",
     "\"(\"",
     "\")\"",
     "\".\"",
     "\"\\\'\"",
-    "\"Cons\"",
-    "\"Car\"",
-    "\"Cdr\"",
-    "\"Atom\"",
+    "\"cons\"",
+    "\"car\"",
+    "\"cdr\"",
+    "\"atom\"",
     "\"eq\"",
+    "<CHAINE>",
   };
 
 }

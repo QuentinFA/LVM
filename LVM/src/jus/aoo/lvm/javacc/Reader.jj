@@ -1,164 +1,134 @@
 /**
  * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.5.0+
- */options{	DEBUG_PARSER=true;
+ */
+options
+{
+	DEBUG_PARSER=true;
 	STATIC=false;
-	// lookahead de 2 pour eviter le conflit de choix
-	LOOKAHEAD=2; 
 	//pour regler les problemes de lookahead
-	FORCE_LA_CHECK=false; }PARSER_BEGIN(Reader)
+	FORCE_LA_CHECK=false;
+	// lookahead de 2 pour eviter le conflit de choix
+	
+	LOOKAHEAD=1; 
+	 
+}
+
+PARSER_BEGIN(Reader)
+
 package jus.aoo.lvm.javacc;
- import jus.aoo.lvm.interpretation.*;
- import jus.aoo.lvm.environment.*;
+import jus.aoo.lvm.interpretation.*;
+import jus.aoo.lvm.environment.*;
+import jus.aoo.lvm.interpretation.FSUBR.*;
+import jus.aoo.lvm.interpretation.SUBR.*;
  
- import java.io.*;
-public class Reader{
+import java.io.*;
 
-/** le support de lecture */
-protected static java.io.Reader in = new BufferedReader(new InputStreamReader(System.in));
+public class Reader
+{
 
-/** lecture d'une S-EXPR au terminal
-* @return Sexpr : la Sexpr construite.
-* @throws LispException une erreur de syntaxe
-*/
-public static SExpr read() throws LispException, ParseException{
-
-  Reader r= new Reader (in);
-  SExpr s = r.lecture_term();
-	return s;
- }
-/** lecture d'une S-EXPR à partir de la chaîne
-* @param s : la chaîne
-* @return Sexpr : la Sexpr construite.
-* @throws LispException une erreur de syntaxe
-*/
-public static SExpr read(String s) throws LispException, ParseException{
-
-  in = new StringReader(s);
-  SExpr se= read();
-  return (se);
- }
-/** évaluation de la séquence S-EXPRs à partir du fichier s
-* @param s : le nom du fichier
-* @return Sexpr : la SEXPR construite à partir d'une ligne du fichier.
-* @throws LispException une erreur de lecture
-*/
-public static SExpr importe(String s) throws LispException, FileNotFoundException, ParseException{
-
-  	in = new FileReader(s);
-    SExpr se= read();
-	return (se);
- }
-
-/** évaluation de la séquence S-EXPRs à partir du fichier s
-* @param s : le nom du fichier
-* @return Sexpr : symbole du nom du fichier.
-* @throws LispException une erreur de lecture
-*/
-
-public static SExpr importeFile(String s) throws LispException, FileNotFoundException, ParseException{
-
-	return (read (s));
- }
+	/** le support de lecture */
+	protected static java.io.Reader in = new BufferedReader(new InputStreamReader(System.in));
+	
+	/** lecture d'une S-EXPR au terminal
+	* @return Sexpr : la Sexpr construite.
+	* @throws LispException une erreur de syntaxe
+	*/
+	public static SExpr read() throws LispException, ParseException
+	{
+	 	Reader r= new Reader (in);
+	  	SExpr s = r.lecture_term();
+		return s;
+	}
+	/** lecture d'une S-EXPR à partir de la chaîne
+	* @param s : la chaîne
+	* @return Sexpr : la Sexpr construite.
+	* @throws LispException une erreur de syntaxe
+	*/
+	public static SExpr read(String s) throws LispException, ParseException
+	{
+	  	in = new StringReader(s);
+	  	SExpr se= read();
+	  	return (se);
+	}
+	/** évaluation de la séquence S-EXPRs à partir du fichier s
+	* @param s : le nom du fichier
+	* @return Sexpr : symbole du nom du fichier.
+	* @throws LispException une erreur de lecture
+	*/
+	public static SExpr importe(String s) throws LispException, FileNotFoundException, ParseException
+	{
+	  	in = new FileReader(s);
+	    SExpr se= read();
+		return (se);
+	}
 }
 PARSER_END(Reader)
 // les caractères ignorés
 SKIP :
 {
-" " | "\t" | "\r"| "\n" // attention élimine la notion de fin de ligne
-| "\u0000" | "\u0001" | "\u0002" | "\u0003" | "\u0004" | "\u0005" | "\u0006" | "\u0007"
-| "\u0008" | "\u000B" | "\u000C" | "\u000E" | "\u000F" | "\u0010" | "\u0011" | "\u0012"
-| "\u0013" | "\u0014" | "\u0015" | "\u0016" | "\u0017" | "\u0018" | "\u0019" | "\u001A"
-| "\u001B" | "\u001C" | "\u001D" | "\u001E" | "\u001F" | "\u007F"
+ 	" " | "\t" | "\r"
+	| "\u0000" | "\u0001" | "\u0002" | "\u0003" | "\u0004" | "\u0005" | "\u0006" | "\u0007"
+	| "\u0008" | "\u000B" | "\u000C" | "\u000E" | "\u000F" | "\u0010" | "\u0011" | "\u0012"
+	| "\u0013" | "\u0014" | "\u0015" | "\u0016" | "\u0017" | "\u0018" | "\u0019" | "\u001A"
+	| "\u001B" | "\u001C" | "\u001D" | "\u001E" | "\u001F" | "\u007F"
 }
 MORE :
 {
-"//" : IN_SL_COMMENT
-| "/*" : IN_ML_COMMENT
+	"//" : IN_SL_COMMENT
+	| "/*" : IN_ML_COMMENT
 }
+
 <IN_SL_COMMENT> SPECIAL_TOKEN :{<SL_COMMENT: "\n" | "\r" | "\r\n"> : DEFAULT}
 <IN_ML_COMMENT> SPECIAL_TOKEN :{<ML_COMMENT: "*/" > : DEFAULT}
 <IN_SL_COMMENT,IN_ML_COMMENT> SKIP :{< ~[] >}// les lexèmes du langage
 
-TOKEN [IGNORE_CASE]:
+TOKEN :
 {
- <CHAINE:(~[ "'", "(", ")"," " ])+ >
-|<PAROUV:("(")>
-|<PAREF:(")")>
-|<POINT:(".")>
-|<QUOTE:("'")>
-|<CONS :("Cons")>
-|<CAR :("Car")>
-|<CDR :("Cdr")>
-|<ATOM :("Atom")>
-|<EQ :("eq")>
-
-
+	<PAROUV:("(")>
+	|<PAREF:(")")>
+	|<POINT:(".")>
+	|<QUOTE:("'")>
+	|<CONS :("cons")>
+	|<CAR :("car")>
+	|<CDR :("cdr")>
+	|<ATOM :("atom")>
+	|<EQ :("eq")>
+	|<CHAINE:(~[".", "'", "(", ")", " " ])+ >
 }
   //Définir les lexèmes du langage
 
 // les règles de grammaire de ce langage
 SExpr lecture_term() throws LispException:
+{SExpr s;}
 {
-  //used variables
- Symbole atome; SList l; SExpr s, s1,s2; Nil n;}
-{
-   atome= Atome()  (s1 = lecture_term())*
-   {
-     return atome;
-   }
-    |  n= NIL()
-   {
-     return n;
-   } 
-   |< PAROUV > l=liste() < PAREF >   {
-     return l;   }
-   |< QUOTE > s = lecture_term()
-   {
-     return new SCons (new Symbole ("quote"), new SCons( s, Nil.NIL));
-   }
-   
-    }
-
-Symbole Atome() throws LispException:
-{
-  Symbole s;}
-{
-  	s = chaine() 
-     {       return s;
-     }
+	< PAROUV > {return liste();}	| s= atome() {return s;}
+	| {throw new LispException();}
+ 	/*  < PAROUV > s= liste() < PAREF > {return s;}
+ 	| < POINT > s= atome() {return s;}
+	| s= atome() {return new SCons(s, Nil.NIL);}  
+	*/
+   //|< QUOTE > s = lecture_term() {return new SCons (new Symbole ("quote"), new SCons( s, Nil.NIL));}
 }
 
-Symbole chaine() throws LispException:
+SExpr liste() throws LispException:
+{SExpr s;}
 {
-  Token t;
-}
-{
-  	t = < CHAINE > 
-     {
-       return new Symbole(t.image);
-     }
-
+  	< PAREF > {return Nil.NIL;}
+ 	| < PAROUV > {return new SCons(liste(), liste());}
+	| < POINT > s= atome() < PAREF > {return s;}
+	| s= atome() {return new SCons(s, liste());}
 }
 
-
-SList liste() throws LispException:
-
-{SList l1,l2; Symbole a; SExpr s;}
- 
+SExpr atome() throws LispException:
+{Nil n; Token s;}
 {
-  	 < QUOTE >  s = lecture_term() {return new SCons (new Symbole ("quote"), new SCons( s, Nil.NIL));}
-	|< PAROUV > l1 = liste() < PAREF > l2 = liste() {return new SCons(l1, l2);} //2 listes
-	|< PAROUV > < PAREF> l1 = liste() {return new SCons(Nil.NIL, l1);} // Nil et liste
-	| a = Atome() l1 = liste() {return new SCons(a, l1);} // atome et liste
-	| {return  (SList ) Nil.NIL;} //par défaut 
+    < CAR > {return new CAR();}
+	| s= < CHAINE > {return new Symbole(s.image);}
 }
 
-
-Nil NIL():
+/*SExpr liste() throws LispException:
+{SExpr s1, s2;}
 {
-}
-
-{
-	< PAROUV > < PAREF> {return  (Nil) Nil.NIL;} 
-}
-
+	< PAROUV > s1= liste() < PAREF > s2= lecture_term() {return new SCons(s1, s2);}
+	| s1= atome() s2= lecture_term() {return new SCons(s1, s2);}
+	| < PAREF > {return Nil.NIL;}} */

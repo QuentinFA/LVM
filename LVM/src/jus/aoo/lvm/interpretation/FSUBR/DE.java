@@ -1,6 +1,7 @@
 package jus.aoo.lvm.interpretation.FSUBR;
 import jus.aoo.lvm.environment.Context;
-import jus.aoo.lvm.interpretation.*;
+import jus.aoo.lvm.interpretation.FSubr;
+import jus.aoo.lvm.interpretation.SExpr;
 
 
 public class DE extends FSubr

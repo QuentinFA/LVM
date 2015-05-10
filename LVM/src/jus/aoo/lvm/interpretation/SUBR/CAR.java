@@ -1,7 +1,10 @@
 package jus.aoo.lvm.interpretation.SUBR;
 import jus.aoo.lvm.environment.Context;
 import jus.aoo.lvm.environment.LispException;
-import jus.aoo.lvm.interpretation.*;
+import jus.aoo.lvm.interpretation.Atome;
+import jus.aoo.lvm.interpretation.SExpr;
+import jus.aoo.lvm.interpretation.SList;
+import jus.aoo.lvm.interpretation.Subr;
 
 public class CAR extends Subr
 {
