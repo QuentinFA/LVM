@@ -99,7 +99,7 @@ public class XmlHandler extends DefaultHandler {
 	protected void traiteLoad(Attributes attrs) throws SAXException {
 	try {
 	String name = attrs.getValue("name");
-	Reader.importeFile(name);
+	Reader.importe(name);
 	} catch(Exception e) {
 	throw new SAXException("traiteLoad", e);
 	}
