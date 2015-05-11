@@ -19,4 +19,9 @@ public class CDR extends Subr
 		
 		return arg.cdr();
 	}
+
+	@Override
+	public int getNbr_arg() {
+		return 1;
+	}
 }

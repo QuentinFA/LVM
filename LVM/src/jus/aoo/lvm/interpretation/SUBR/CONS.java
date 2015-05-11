@@ -22,4 +22,9 @@ public class CONS extends Subr
 		
 		return new SCons(arg1, arg2);
 	}
+
+	@Override
+	public int getNbr_arg() {
+		return 2;
+	}
 }

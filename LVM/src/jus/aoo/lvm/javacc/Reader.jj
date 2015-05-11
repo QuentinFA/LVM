@@ -58,18 +58,6 @@ public class Reader
 		
 	  	return se;
 	}
-	/** évaluation de la séquence S-EXPRs à partir du fichier s
-	* @param s : le nom du fichier
-	* @return Sexpr : symbole du nom du fichier.
-	* @throws LispException une erreur de lecture
-	*/
-	/*public static SExpr importe(String s) throws LispException, FileNotFoundException, ParseException
-	{
-	  	in = new FileReader(s);
-	  	
-	    SExpr se= read();
-		return (se);
-	}*/
 }
 PARSER_END(Reader)
 // les caractères ignorés
@@ -96,7 +84,8 @@ TOKEN :
 	<PAROUV:("(")>
 	|<PAREF:(")")>
 	|<POINT:(".")>
-	|<CHAINE:(~["(", ")", ".", " "])+ >
+	|<QUOTE:("'")>
+	|<CHAINE:(~["(", ")", ".", " ", "'"])+ >
 }
   //Définir les lexèmes du langage
 
@@ -117,8 +106,16 @@ SExpr liste() throws LispException:
 }
 
 SExpr atome() throws LispException:
-{Nil n; Token s;}
+{Token s;}
 {
-  	s= < CHAINE > {return new Symbole(s.image);} 
- 	| {throw new LispException();} 	  
+
+  	< QUOTE > {return quote();}
+ 	| s= < CHAINE > {return new Symbole(s.image);}
+ 	| {throw new LispException();}
 }
+
+SExpr quote() throws LispException:
+{Token s;}
+{
+ 	< PAROUV > {return liste();}
+ 	| s= < CHAINE > {return new SCons(new Symbole("quote"), new SCons(new Symbole(s.image), Nil.NIL));} }

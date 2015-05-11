@@ -19,4 +19,9 @@ public class CAR extends Subr
 		
 		return arg.car();
 	}
+	
+	@Override
+	public int getNbr_arg() {
+		return 1;
+	}
 }

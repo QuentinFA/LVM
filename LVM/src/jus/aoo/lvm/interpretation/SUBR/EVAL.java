@@ -19,4 +19,9 @@ public class EVAL extends Subr
 					
 		return arg;
 	}
+
+	@Override
+	public int getNbr_arg() {
+		return 1;
+	}
 }

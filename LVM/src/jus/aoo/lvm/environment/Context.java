@@ -9,15 +9,15 @@ import jus.aoo.lvm.interpretation.Fonction;
 import jus.aoo.lvm.interpretation.SExpr;
 
 /**
- * Représente le stockage des variables et de leur valeur.</br>
+ * Contient les associations des variables, fonctions, et paramètre des fonctions</br>
  * Le contexte est représenté sous forme de "pile" de HashMap, afin de pouvoir créer des variables avec
- * des noms déjà existant sans effacer les anciennes valeurs 
- * (notamment pour le passage de paramètres fonctionnels / paramètres effectifs).
+ * des noms déjà existant sans effacer les anciennes valeurs
+ * notamment pour le passage de paramètres fonctionnels / paramètres effectifs (ex: arg1, ..., argN)
  */
 public class Context
 {
-	private static List<Map<String, SExpr>> ctx;
-	private static Map<String, Fonction> tf;
+	private static List<Map<String, SExpr>> ctx; //Variables et paramètres
+	private static Map<String, Fonction> tf; //Fonctions
 	
 	public static final Context CONTEXT = new Context();
 	
@@ -31,9 +31,9 @@ public class Context
 	}
 	
 	/**
-	 * Fonction de récupération d'une valeur à partir d'un String dans le contexte
-	 * @param s : Le String dont ont veut récupérer la valeur associée
-	 * @return SExpr correspondante, ou null si non présente
+	 * Renvoie l'expression associée à un nom de variable
+	 * @param s : le nom de la variable dont on veut récupérer la valeur
+	 * @return SExpr correspondante / null si aucune association
 	 */
 	public static SExpr get(String s)
 	{
@@ -44,26 +44,38 @@ public class Context
 		return null;
 	}
 	
+	/**
+	 * Renvoie la fonction associée à un nom de fonction
+	 * @param s : le nom de la fonction que l'on veut récupérer
+	 * @return Fonction correspondante / null si aucune association
+	 */
 	public static Fonction getFonction(String s)
 	{
+		Fonction d = null;
 		if(tf.containsKey(s))
-			return tf.get(s);
+			d = tf.get(s);
 		
-		return null;
-	}
-	
-	public static void addFonction(String s, Fonction v)
-	{
-		tf.put(s, v);
+		return d;
 	}
 	
 	/**
-	 * Ajout d'un String et de sa valeur dans le contexte</br>
+	 * Ajout d'une fonction nommée s dans le contexte</br>
+	 * Si elle est déjà présente l'ancienne fonction est remplacée
+	 * @param s : le nom de la fonction à ajouter
+	 * @param v : la fonction
+	 */
+	public static void addFonction(String s, Fonction f)
+	{
+		tf.put(s, f);
+	}
+	
+	/**
+	 * Ajout d'un paramètre nommé s dans le contexte</br>
 	 * S'il est déjà présent, un nouveau contexte contenant la nouvelle valeur est ajouté,
 	 * sinon, il est simplement ajouté dans le contexte actuel.</br>
 	 * Utilisé pour passer les paramètres à une fonction.
-	 * @param s : Le String à ajouter
-	 * @param v : La valeur correspondante
+	 * @param s : le nom du paramètre à ajouter
+	 * @param v : sa valeur associée
 	 */
 	public static void addFVar(String s, SExpr v)
 	{
@@ -79,10 +91,10 @@ public class Context
 	}
 	
 	/**
-	 * Fonction d'ajout d'une variable.</br>
+	 * Ajout d'une variable nommée s dans le contexte</br>
 	 * Si ce nom de variable est déjà utilisé, alors la valeur correspondante est remplacée par la nouvelle.
-	 * @param s : Le String auquel associer la valeur
-	 * @param v : La valeur correspondant au String
+	 * @param s : le nom de la variable à ajouter
+	 * @param v : sa valeur associée
 	 */
 	public static void addVar(String s, SExpr v)
 	{
@@ -90,10 +102,10 @@ public class Context
 	}
 	
 	/**
-	 * Enlève un lien d'un String et une valeur du contexte.</br>
-	 * Si le contexte le plus haut est vide (et différent du contexte de base), il est effacé.</br>
-	 * Utilisé pour effacer les variables ajoutées après un passage de paramètre à une fonction.
-	 * @param s : Le String à effacer
+	 * Supprime une variable nommée s du contexte</br>
+	 * Si le contexte le plus haut est vide (et différent du contexte de base), il est effacé</br>
+	 * Utilisé pour effacer les paramètres d'une fonction après utilisation de celle-ci
+	 * @param s : le nom de la variable à supprimer
 	 */
 	public static void delVar(String s)
 	{

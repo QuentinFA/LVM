@@ -15,4 +15,8 @@ public class APPLY extends Subr
 		
 		return arg.eval();
 	}
+	@Override
+	public int getNbr_arg() {
+		return 1;
+	}
 }

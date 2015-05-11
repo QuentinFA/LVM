@@ -41,36 +41,47 @@ public class SCons implements SList
 	}
 
 	@Override
-	public SExpr eval() 
+	public SExpr eval() throws LispException
 	{
-		Fonction f = Context.getFonction(car.toString());
-		
-		if (f != null)
+		Fonction f = Context.getFonction(car.toString()); //null si pas de fonction associée
+
+		if (f != null) //Fonctions
 		{	
+			
+			int nbrMax = f.getNbr_arg(); //Nombre d'argments à récupérer
+			
+			//Récupérer les arguments
 			SExpr cdr_temp = cdr;
 			int nbr = 0;
 			
-			if (cdr_temp.car() instanceof Symbole && cdr_temp.cdr() instanceof Symbole)
+			if (cdr_temp.car() instanceof Symbole && cdr_temp.cdr() instanceof Symbole) // (a.a)
+			{
+				nbr ++;
+				if (nbr > nbrMax) throw new LispException("Trop d'arguments dans " + f.toString() +"...");
 				Context.addFVar("arg"+nbr, cdr_temp);
+			}
 			else
 			{
-				while (cdr_temp instanceof SCons)
+				while (cdr_temp instanceof SCons) //Argument
 				{		
 					nbr ++;
-					//Liaison des paramÃ¨tres
+					if (nbr > nbrMax) throw new LispException("Trop d'arguments dans " + f.toString() +"...");
 					Context.addFVar("arg"+nbr, cdr_temp.car());
 					
 					cdr_temp = cdr_temp.cdr();
 				}
-				if (cdr_temp instanceof Symbole)
+				if (cdr_temp instanceof Symbole) // (    .a)
 				{	
 					nbr ++;
+					if (nbr > nbrMax) throw new LispException("Trop d'arguments dans " + f.toString() +"...");
 					Context.addFVar("arg"+nbr, cdr_temp);
 				}
 			}
-
-			SExpr result = f.apply();
-			for (int i=0; i < nbr; i++)
+			
+			if (nbr != nbrMax) throw new LispException("Pas assez d'arguments dans " + f.toString() +"...");
+			
+			SExpr result = f.apply(); //Appliquer Fonction
+			for (int i=0; i < nbr; i++) //Supprimer arguments
 				Context.delVar("arg"+(i+1));
 			
 			return result;

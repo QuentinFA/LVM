@@ -10,7 +10,7 @@ public interface SExpr
 	/**
 	 * Evaluer l'expression
 	 */
-	public SExpr eval();
+	public SExpr eval() throws LispException;
 	
 	/**
 	 * Renvoie la chaîne de caractères associèes

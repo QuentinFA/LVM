@@ -19,13 +19,13 @@ private final int jjStopStringLiteralDfa_0(int pos, long active0)
    switch (pos)
    {
       case 0:
-         if ((active0 & 0x7fffffffcL) != 0L)
-            return 0;
          if ((active0 & 0x1800000000L) != 0L)
          {
-            jjmatchedKind = 43;
+            jjmatchedKind = 44;
             return 0;
          }
+         if ((active0 & 0x7fffffffcL) != 0L)
+            return 0;
          return -1;
       default :
          return -1;
@@ -109,6 +109,8 @@ private int jjMoveStringLiteralDfa0_0()
          return jjStartNfaWithStates_0(0, 32, 0);
       case 31:
          return jjStartNfaWithStates_0(0, 33, 0);
+      case 39:
+         return jjStopAtPos(0, 43);
       case 40:
          return jjStopAtPos(0, 40);
       case 41:
@@ -175,9 +177,9 @@ private int jjMoveNfa_0(int startState, int curPos)
             switch(jjstateSet[--i])
             {
                case 0:
-                  if ((0xffffbcfeffffffffL & l) == 0L)
+                  if ((0xffffbc7effffffffL & l) == 0L)
                      break;
-                  kind = 43;
+                  kind = 44;
                   jjstateSet[jjnewStateCnt++] = 0;
                   break;
                default : break;
@@ -192,7 +194,7 @@ private int jjMoveNfa_0(int startState, int curPos)
             switch(jjstateSet[--i])
             {
                case 0:
-                  kind = 43;
+                  kind = 44;
                   jjstateSet[jjnewStateCnt++] = 0;
                   break;
                default : break;
@@ -210,8 +212,8 @@ private int jjMoveNfa_0(int startState, int curPos)
                case 0:
                   if ((jjbitVec0[i2] & l2) == 0L)
                      break;
-                  if (kind > 43)
-                     kind = 43;
+                  if (kind > 44)
+                     kind = 44;
                   jjstateSet[jjnewStateCnt++] = 0;
                   break;
                default : break;
@@ -345,7 +347,7 @@ public static final String[] jjstrLiteralImages = {
 "", null, null, null, null, null, null, null, null, null, null, null, null, 
 null, null, null, null, null, null, null, null, null, null, null, null, null, null, 
 null, null, null, null, null, null, null, null, null, null, null, null, null, "\50", 
-"\51", "\56", null, };
+"\51", "\56", "\47", null, };
 
 /** Lexer state names. */
 public static final String[] lexStateNames = {
@@ -357,10 +359,10 @@ public static final String[] lexStateNames = {
 /** Lex State array. */
 public static final int[] jjnewLexState = {
    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
-   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 2, 0, 0, -1, -1, -1, -1, -1, 
+   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 2, 0, 0, -1, -1, -1, -1, -1, -1, 
 };
 static final long[] jjtoToken = {
-   0xf0000000001L, 
+   0x1f0000000001L, 
 };
 static final long[] jjtoSkip = {
    0xe7fffffffeL, 

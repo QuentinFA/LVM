@@ -16,10 +16,14 @@ public class DE extends FSubr
 		SExpr arg1 = eval_arg(Context.get("arg1"));
 		SExpr arg2 = eval_arg(Context.get("arg2"));
 		SExpr arg3 = eval_arg(Context.get("arg3"));
-
+		
 		Context.addFonction(arg1.toString(), new Expr(new SCons(arg2, arg3)));
 					
 		return Symbole.TRUE;
 	}
-
+	
+	@Override
+	public int getNbr_arg() {
+		return 3;
+	}
 }

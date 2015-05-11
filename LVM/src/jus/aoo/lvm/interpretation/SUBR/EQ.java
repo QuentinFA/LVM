@@ -23,4 +23,9 @@ public class EQ extends Subr
 		else
 			return Nil.NIL;
 	}
+
+	@Override
+	public int getNbr_arg() {
+		return 2;
+	}
 }

@@ -21,7 +21,9 @@ public interface ReaderConstants {
   /** RegularExpression Id. */
   int POINT = 42;
   /** RegularExpression Id. */
-  int CHAINE = 43;
+  int QUOTE = 43;
+  /** RegularExpression Id. */
+  int CHAINE = 44;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -75,6 +77,7 @@ public interface ReaderConstants {
     "\"(\"",
     "\")\"",
     "\".\"",
+    "\"\\\'\"",
     "<CHAINE>",
   };
 

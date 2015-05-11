@@ -6,6 +6,7 @@ import jus.aoo.lvm.interpretation.*;
 
 public class COND extends FSubr
 {
+	
 	public COND() {
 		str = "cond	";
 	}
@@ -24,6 +25,11 @@ public class COND extends FSubr
 			return condTrue;
 		else
 			return condFalse;
+	}
+
+	@Override
+	public int getNbr_arg() {
+		return 2;
 	}
 
 }

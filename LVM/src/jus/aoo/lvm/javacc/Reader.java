@@ -86,15 +86,38 @@ public class Reader implements ReaderConstants {
   }
 
   final public SExpr atome() throws ParseException, LispException {
- Nil n; Token s;
+ Token s;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case QUOTE:
+      jj_consume_token(QUOTE);
+                   {if (true) return quote();}
+      break;
     case CHAINE:
       s = jj_consume_token(CHAINE);
-                       {if (true) return new Symbole(s.image);}
+                         {if (true) return new Symbole(s.image);}
       break;
     default:
       jj_la1[2] = jj_gen;
            {if (true) throw new LispException();}
+    }
+    throw new Error("Missing return statement in function");
+  }
+
+  final public SExpr quote() throws ParseException, LispException {
+ Token s;
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case PAROUV:
+      jj_consume_token(PAROUV);
+                    {if (true) return liste();}
+      break;
+    case CHAINE:
+      s = jj_consume_token(CHAINE);
+                         {if (true) return new SCons(new Symbole("quote"), new SCons(new Symbole(s.image), Nil.NIL));}
+      break;
+    default:
+      jj_la1[3] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
     }
     throw new Error("Missing return statement in function");
   }
@@ -108,7 +131,7 @@ public class Reader implements ReaderConstants {
   public Token jj_nt;
   private int jj_ntk;
   private int jj_gen;
-  final private int[] jj_la1 = new int[3];
+  final private int[] jj_la1 = new int[4];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static {
@@ -116,10 +139,10 @@ public class Reader implements ReaderConstants {
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x0,0x0,0x0,};
+      jj_la1_0 = new int[] {0x0,0x0,0x0,0x0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x100,0x700,0x800,};
+      jj_la1_1 = new int[] {0x100,0x700,0x1800,0x1100,};
    }
 
   /** Constructor with InputStream. */
@@ -133,7 +156,7 @@ public class Reader implements ReaderConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 3; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -147,7 +170,7 @@ public class Reader implements ReaderConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 3; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -157,7 +180,7 @@ public class Reader implements ReaderConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 3; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -167,7 +190,7 @@ public class Reader implements ReaderConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 3; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -176,7 +199,7 @@ public class Reader implements ReaderConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 3; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -185,7 +208,7 @@ public class Reader implements ReaderConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 3; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
   }
 
   private Token jj_consume_token(int kind) throws ParseException {
@@ -236,12 +259,12 @@ public class Reader implements ReaderConstants {
   /** Generate ParseException. */
   public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[44];
+    boolean[] la1tokens = new boolean[45];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 4; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -253,7 +276,7 @@ public class Reader implements ReaderConstants {
         }
       }
     }
-    for (int i = 0; i < 44; i++) {
+    for (int i = 0; i < 45; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
@@ -275,16 +298,4 @@ public class Reader implements ReaderConstants {
   final public void disable_tracing() {
   }
 
-        /** évaluation de la séquence S-EXPRs à partir du fichier s
-	* @param s : le nom du fichier
-	* @return Sexpr : symbole du nom du fichier.
-	* @throws LispException une erreur de lecture
-	*/
-        /*public static SExpr importe(String s) throws LispException, FileNotFoundException, ParseException
-	{
-	  	in = new FileReader(s);
-	  	
-	    SExpr se= read();
-		return (se);
-	}*/
 }
