@@ -23,17 +23,7 @@ public interface ReaderConstants {
   /** RegularExpression Id. */
   int QUOTE = 42;
   /** RegularExpression Id. */
-  int CONS = 43;
-  /** RegularExpression Id. */
-  int CAR = 44;
-  /** RegularExpression Id. */
-  int CDR = 45;
-  /** RegularExpression Id. */
-  int ATOM = 46;
-  /** RegularExpression Id. */
-  int EQ = 47;
-  /** RegularExpression Id. */
-  int CHAINE = 48;
+  int CHAINE = 43;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -87,11 +77,6 @@ public interface ReaderConstants {
     "\")\"",
     "\".\"",
     "\"\\\'\"",
-    "\"cons\"",
-    "\"car\"",
-    "\"cdr\"",
-    "\"atom\"",
-    "\"eq\"",
     "<CHAINE>",
   };
 

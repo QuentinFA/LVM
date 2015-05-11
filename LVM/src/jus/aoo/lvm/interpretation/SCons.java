@@ -22,8 +22,6 @@ public class SCons implements SList
 		{
 			if (cdr instanceof Nil)
 				return "(" + car.toString() + ")";
-			else if (cdr instanceof Atome)
-				return "(" + car.toString() + ")" + " " + cdr.toString();
 			else
 				return "(" + car.toString() + ")" + " " + cdr.toString();
 		}
@@ -31,8 +29,6 @@ public class SCons implements SList
 		{
 			if (cdr instanceof Nil)
 				return car.toString();
-			else if (cdr instanceof Atome)
-				return car.toString() + " " + cdr.toString();
 			else
 				return car.toString() + " " + cdr.toString();
 		}
@@ -47,36 +43,37 @@ public class SCons implements SList
 	@Override
 	public SExpr eval() 
 	{
-		if (car instanceof Fonction)
-		{
+		Fonction f = Context.getFonction(car.toString());
+	  	
+		if (f != null)
+		{	
 			SExpr cdr_temp = cdr;
 			int nbr = 1;
 			
-			if (cdr_temp.car() instanceof Atome && cdr_temp.cdr() instanceof Atome)
+			if (cdr_temp.car() instanceof Symbole && cdr_temp.cdr() instanceof Symbole)
 				Context.addFVar("arg"+nbr, cdr_temp);
 			else
 			{
+
 				while (cdr_temp instanceof SCons)
 				{
 					//Liaison des paramètres
 					Context.addFVar("arg"+nbr, cdr_temp.car());
-					
 					nbr ++;
 					cdr_temp = cdr_temp.cdr();
 				}
-				if (cdr_temp instanceof Atome)
+				if (cdr_temp instanceof Symbole)
 					Context.addFVar("arg"+nbr, cdr_temp);
 			}
 			
-			SExpr result = ((Fonction)car).apply();
+			SExpr result = f.apply();
 			for (int i=1; i <= nbr; i++)
 				Context.delVar("arg"+nbr);
+			
+			
 			return result;
 		}
-		
-		car = car.eval();
-		cdr = cdr.eval();
-		return this;
+		return new SCons(car.eval(), cdr.eval());
 	}
 
 	@Override

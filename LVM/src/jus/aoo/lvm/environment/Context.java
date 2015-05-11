@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import jus.aoo.lvm.interpretation.Fonction;
 import jus.aoo.lvm.interpretation.SExpr;
 
 /**
@@ -16,12 +17,16 @@ import jus.aoo.lvm.interpretation.SExpr;
 public class Context
 {
 	private static List<Map<String, SExpr>> ctx;
+	private static Map<String, Fonction> tf;
+	
 	public static final Context CONTEXT = new Context();
 	
 	private Context()
 	{
 		ctx = new ArrayList<Map<String, SExpr>>();
 		ctx.add(new HashMap<String, SExpr>());
+		
+		tf = new HashMap<String, Fonction>();
 	}
 	
 	/**
@@ -32,12 +37,23 @@ public class Context
 	public static SExpr get(String s)
 	{
 		for(int i = ctx.size() - 1; i >= 0; i--)
-		{
 			if(ctx.get(i).containsKey(s))
 				return ctx.get(i).get(s);
-		}
+
+		return null;
+	}
+	
+	public static Fonction getFonction(String s)
+	{
+		if(tf.containsKey(s))
+			return tf.get(s);
 		
 		return null;
+	}
+	
+	public static void addFonction(String s, Fonction v)
+	{
+		tf.put(s, v);
 	}
 	
 	/**
@@ -50,14 +66,9 @@ public class Context
 	 */
 	public static void addFVar(String s, SExpr v)
 	{
-		if(ctx.get(ctx.size() - 1).get(s) != null)
-		{
-			Map<String, SExpr> newCtx = new HashMap<String, SExpr>();
-			newCtx.put(s, v);
-			ctx.add(newCtx);
-		}
-		else
-			ctx.get(ctx.size() - 1).put(s, v);
+		Map<String, SExpr> newCtx = new HashMap<String, SExpr>();
+		newCtx.put(s, v);
+		ctx.add(newCtx);
 	}
 	
 	/**
@@ -68,7 +79,7 @@ public class Context
 	 */
 	public static void addVar(String s, SExpr v)
 	{
-		ctx.get(ctx.size() - 1).put(s, v);
+		ctx.get(0).put(s, v);
 	}
 	
 	/**

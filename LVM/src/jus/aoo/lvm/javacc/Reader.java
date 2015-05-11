@@ -57,14 +57,10 @@ public class Reader implements ReaderConstants {
         jj_consume_token(PAROUV);
                     {if (true) return liste();}
         break;
-      case CAR:
-      case CHAINE:
-        s = atome();
-                      {if (true) return s;}
-        break;
       default:
         jj_la1[0] = jj_gen;
-           {if (true) throw new LispException();}
+        s = atome();
+                      {if (true) return s;}
       }
     throw new Error("Missing return statement in function");
     } finally {
@@ -91,15 +87,10 @@ public class Reader implements ReaderConstants {
         jj_consume_token(PAREF);
                                           {if (true) return s;}
         break;
-      case CAR:
-      case CHAINE:
-        s = atome();
-                      {if (true) return new SCons(s, liste());}
-        break;
       default:
         jj_la1[1] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
+        s = atome();
+                      {if (true) return new SCons(s, liste());}
       }
     throw new Error("Missing return statement in function");
     } finally {
@@ -112,18 +103,13 @@ public class Reader implements ReaderConstants {
     try {
  Nil n; Token s;
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case CAR:
-        jj_consume_token(CAR);
-             {if (true) return new CAR();}
-        break;
       case CHAINE:
         s = jj_consume_token(CHAINE);
-                         {if (true) return new Symbole(s.image);}
+                       {if (true) return new Symbole(s.image);}
         break;
       default:
         jj_la1[2] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
+           {if (true) throw new LispException();}
       }
     throw new Error("Missing return statement in function");
     } finally {
@@ -151,7 +137,7 @@ public class Reader implements ReaderConstants {
       jj_la1_0 = new int[] {0x0,0x0,0x0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x11080,0x11380,0x11000,};
+      jj_la1_1 = new int[] {0x80,0x380,0x800,};
    }
 
   /** Constructor with InputStream. */
@@ -270,7 +256,7 @@ public class Reader implements ReaderConstants {
   /** Generate ParseException. */
   public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[49];
+    boolean[] la1tokens = new boolean[44];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -287,7 +273,7 @@ public class Reader implements ReaderConstants {
         }
       }
     }
-    for (int i = 0; i < 49; i++) {
+    for (int i = 0; i < 44; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

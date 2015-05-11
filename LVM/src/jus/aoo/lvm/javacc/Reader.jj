@@ -88,11 +88,6 @@ TOKEN :
 	|<PAREF:(")")>
 	|<POINT:(".")>
 	|<QUOTE:("'")>
-	|<CONS :("cons")>
-	|<CAR :("car")>
-	|<CDR :("cdr")>
-	|<ATOM :("atom")>
-	|<EQ :("eq")>
 	|<CHAINE:(~[".", "'", "(", ")", " " ])+ >
 }
   //Définir les lexèmes du langage
@@ -102,12 +97,7 @@ SExpr lecture_term() throws LispException:
 {SExpr s;}
 {
 	< PAROUV > {return liste();}	| s= atome() {return s;}
-	| {throw new LispException();}
- 	/*  < PAROUV > s= liste() < PAREF > {return s;}
- 	| < POINT > s= atome() {return s;}
-	| s= atome() {return new SCons(s, Nil.NIL);}  
-	*/
-   //|< QUOTE > s = lecture_term() {return new SCons (new Symbole ("quote"), new SCons( s, Nil.NIL));}
+	| {throw new LispException();}
 }
 
 SExpr liste() throws LispException:
@@ -122,13 +112,6 @@ SExpr liste() throws LispException:
 SExpr atome() throws LispException:
 {Nil n; Token s;}
 {
-    < CAR > {return new CAR();}
-	| s= < CHAINE > {return new Symbole(s.image);}
+  	s= < CHAINE > {return new Symbole(s.image);}
+ 	| {throw new LispException();} 	  
 }
-
-/*SExpr liste() throws LispException:
-{SExpr s1, s2;}
-{
-	< PAROUV > s1= liste() < PAREF > s2= lecture_term() {return new SCons(s1, s2);}
-	| s1= atome() s2= lecture_term() {return new SCons(s1, s2);}
-	| < PAREF > {return Nil.NIL;}} */
