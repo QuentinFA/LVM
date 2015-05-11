@@ -39,9 +39,9 @@ public class Expr extends Foncteur
 		tf = new HashMap<String, SExpr>();
 		for (int i=0; i < args.size(); i++)
 			tf.put(args.get(i), eval_arg(Context.get("arg"+(i+1))));
-		
+		//System.out.println(tf);
 		if (args.size() > 0)
-			return (lier(definition)).eval();
+			return lier(definition).eval();
 		else
 			return definition.eval();
 	}

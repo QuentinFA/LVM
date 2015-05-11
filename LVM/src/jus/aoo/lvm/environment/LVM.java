@@ -1,17 +1,20 @@
 package jus.aoo.lvm.environment;
 
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 import jus.aoo.lvm.interpretation.*;
 import jus.aoo.lvm.interpretation.FSUBR.*;
 import jus.aoo.lvm.interpretation.SUBR.*;
-import jus.aoo.lvm.javacc.*;
+
+import jus.aoo.lvm.javacc.ParseException;
+import jus.aoo.lvm.javacc.Reader;
 
 public class LVM {
 	
 	protected static void initialiser()
 	{
-		
 		//initialisation des variables
-
 		Context.addVar("()", Nil.NIL);
 		Context.addVar("'", new Symbole("quote"));
 		Context.addVar("vrai", Symbole.TRUE);
@@ -26,42 +29,58 @@ public class LVM {
 		Context.addFonction("eq", new EQ());
 		Context.addFonction("cons", new CONS());
 		Context.addFonction("eval", new EVAL());
-		//Context.addFonction("quote", new QUOTE());
-		
-		// TODO Ajouter T
+		Context.addFonction("cond", new COND());
 	}
 	
-	protected LVM(){
-		initialiser();
+	public static void afficher(SExpr e)
+	{
+		if (e instanceof Atome)
+		{
+			if (e.eval()	 instanceof Atome)
+				System.out.println(e.toString() + " -> " + e.eval().toString());
+			else
+				System.out.println(e.toString() + " -> " + "(" + e.eval().toString() + ")");
+		}
+		else
+		{
+			if (e.eval() instanceof Atome)
+				System.out.println("(" + e.toString() + ")" + " -> " + e.eval().toString());
+			else
+				System.out.println("(" + e.toString() + ")" + " -> " + "(" + e.eval().toString() + ")");
+		}
 	}
 	
-	
-	public static void main(String[] args)
+	public static void main(String[] args) throws LispException, FileNotFoundException, ParseException
 	{
 		initialiser();
-		while (true)
-		{
-			// Saisie au clavier d'expression et Ã©valuation
-			SExpr test = null;
+		
+		//Fichier
+		java.io.File fichier = new java.io.File("test.txt");
+		Scanner s = new Scanner(fichier);
+
+		while (s.hasNextLine()) {
+			
+			SExpr se = null;
 			try
-			{test = Reader.read();}
+			{se = Reader.read(s.nextLine());}
 			catch (LispException | ParseException e)
 			{e.printStackTrace();}
 			
-			if (test instanceof Atome)
-			{
-				if (test.eval()	 instanceof Atome)
-					System.out.println(test.toString() + " -> " + test.eval().toString());
-				else
-					System.out.println(test.toString() + " -> " + "(" + test.eval().toString() + ")");
-			}
-			else
-			{
-				if (test.eval() instanceof Atome)
-					System.out.println("(" + test.toString() + ")" + " -> " + test.eval().toString());
-				else
-					System.out.println("(" + test.toString() + ")" + " -> " + "(" + test.eval().toString() + ")");
-			}
+			afficher(se);
+		}
+		s.close();
+		
+		//Entrée
+		while (true) {
+			SExpr se = null;
+			try
+			{se = Reader.read();}
+			catch (LispException | ParseException e)
+			{e.printStackTrace();}
+
+			if (se != null)
+				afficher(se);
 		}
 	}
+
 }

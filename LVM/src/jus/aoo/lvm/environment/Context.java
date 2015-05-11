@@ -25,6 +25,7 @@ public class Context
 	{
 		ctx = new ArrayList<Map<String, SExpr>>();
 		ctx.add(new HashMap<String, SExpr>());
+		ctx.add(new HashMap<String, SExpr>());
 		
 		tf = new HashMap<String, Fonction>();
 	}
@@ -66,9 +67,15 @@ public class Context
 	 */
 	public static void addFVar(String s, SExpr v)
 	{
-		Map<String, SExpr> newCtx = new HashMap<String, SExpr>();
-		newCtx.put(s, v);
-		ctx.add(newCtx);
+		if (ctx.get(ctx.size()-1).containsKey(s)) 
+		{
+			Map<String, SExpr> newCtx = new HashMap<String, SExpr>();
+			newCtx.put(s, v);
+			ctx.add(newCtx);
+		}
+		else
+			ctx.get(ctx.size()-1).put(s, v);
+		
 	}
 	
 	/**

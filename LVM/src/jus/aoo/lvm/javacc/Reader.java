@@ -30,91 +30,73 @@ public class Reader implements ReaderConstants {
         public static SExpr read(String s) throws LispException, ParseException
         {
                 in = new StringReader(s);
+
                 SExpr se= read();
-                return (se);
-        }
-        /** évaluation de la séquence S-EXPRs à partir du fichier s
-	* @param s : le nom du fichier
-	* @return Sexpr : symbole du nom du fichier.
-	* @throws LispException une erreur de lecture
-	*/
-        public static SExpr importe(String s) throws LispException, FileNotFoundException, ParseException
-        {
-                in = new FileReader(s);
-            SExpr se= read();
-                return (se);
+                try
+                {in.reset();}
+                catch (IOException e)
+                {e.printStackTrace();}
+
+                in = new BufferedReader(new InputStreamReader(System.in));
+
+                return se;
         }
 
   //Définir les lexèmes du langage
 
 // les règles de grammaire de ce langage
   final public SExpr lecture_term() throws ParseException, LispException {
-    trace_call("lecture_term");
-    try {
  SExpr s;
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case PAROUV:
-        jj_consume_token(PAROUV);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case PAROUV:
+      jj_consume_token(PAROUV);
                     {if (true) return liste();}
-        break;
-      default:
-        jj_la1[0] = jj_gen;
-        s = atome();
+      break;
+    default:
+      jj_la1[0] = jj_gen;
+      s = atome();
                       {if (true) return s;}
-      }
-    throw new Error("Missing return statement in function");
-    } finally {
-      trace_return("lecture_term");
     }
+    throw new Error("Missing return statement in function");
   }
 
   final public SExpr liste() throws ParseException, LispException {
-    trace_call("liste");
-    try {
  SExpr s;
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case PAREF:
-        jj_consume_token(PAREF);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case PAREF:
+      jj_consume_token(PAREF);
                    {if (true) return Nil.NIL;}
-        break;
-      case PAROUV:
-        jj_consume_token(PAROUV);
+      break;
+    case PAROUV:
+      jj_consume_token(PAROUV);
                       {if (true) return new SCons(liste(), liste());}
-        break;
-      case POINT:
-        jj_consume_token(POINT);
-        s = atome();
-        jj_consume_token(PAREF);
+      break;
+    case POINT:
+      jj_consume_token(POINT);
+      s = atome();
+      jj_consume_token(PAREF);
                                           {if (true) return s;}
-        break;
-      default:
-        jj_la1[1] = jj_gen;
-        s = atome();
+      break;
+    default:
+      jj_la1[1] = jj_gen;
+      s = atome();
                       {if (true) return new SCons(s, liste());}
-      }
-    throw new Error("Missing return statement in function");
-    } finally {
-      trace_return("liste");
     }
+    throw new Error("Missing return statement in function");
   }
 
   final public SExpr atome() throws ParseException, LispException {
-    trace_call("atome");
-    try {
  Nil n; Token s;
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case CHAINE:
-        s = jj_consume_token(CHAINE);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case CHAINE:
+      s = jj_consume_token(CHAINE);
                        {if (true) return new Symbole(s.image);}
-        break;
-      default:
-        jj_la1[2] = jj_gen;
+      break;
+    default:
+      jj_la1[2] = jj_gen;
            {if (true) throw new LispException();}
-      }
-    throw new Error("Missing return statement in function");
-    } finally {
-      trace_return("atome");
     }
+    throw new Error("Missing return statement in function");
   }
 
   /** Generated Token Manager. */
@@ -137,7 +119,7 @@ public class Reader implements ReaderConstants {
       jj_la1_0 = new int[] {0x0,0x0,0x0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x80,0x380,0x800,};
+      jj_la1_1 = new int[] {0x100,0x700,0x800,};
    }
 
   /** Constructor with InputStream. */
@@ -213,7 +195,6 @@ public class Reader implements ReaderConstants {
     jj_ntk = -1;
     if (token.kind == kind) {
       jj_gen++;
-      trace_token(token, "");
       return token;
     }
     token = oldToken;
@@ -228,7 +209,6 @@ public class Reader implements ReaderConstants {
     else token = token.next = token_source.getNextToken();
     jj_ntk = -1;
     jj_gen++;
-      trace_token(token, " (in getNextToken)");
     return token;
   }
 
@@ -287,55 +267,24 @@ public class Reader implements ReaderConstants {
     return new ParseException(token, exptokseq, tokenImage);
   }
 
-  private int trace_indent = 0;
-  private boolean trace_enabled = true;
-
-/** Enable tracing. */
+  /** Enable tracing. */
   final public void enable_tracing() {
-    trace_enabled = true;
   }
 
-/** Disable tracing. */
+  /** Disable tracing. */
   final public void disable_tracing() {
-    trace_enabled = false;
   }
 
-  private void trace_call(String s) {
-    if (trace_enabled) {
-      for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
-      System.out.println("Call:   " + s);
-    }
-    trace_indent = trace_indent + 2;
-  }
-
-  private void trace_return(String s) {
-    trace_indent = trace_indent - 2;
-    if (trace_enabled) {
-      for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
-      System.out.println("Return: " + s);
-    }
-  }
-
-  private void trace_token(Token t, String where) {
-    if (trace_enabled) {
-      for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
-      System.out.print("Consumed token: <" + tokenImage[t.kind]);
-      if (t.kind != 0 && !tokenImage[t.kind].equals("\"" + t.image + "\"")) {
-        System.out.print(": \"" + t.image + "\"");
-      }
-      System.out.println(" at line " + t.beginLine + " column " + t.beginColumn + ">" + where);
-    }
-  }
-
-  private void trace_scan(Token t1, int t2) {
-    if (trace_enabled) {
-      for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
-      System.out.print("Visited token: <" + tokenImage[t1.kind]);
-      if (t1.kind != 0 && !tokenImage[t1.kind].equals("\"" + t1.image + "\"")) {
-        System.out.print(": \"" + t1.image + "\"");
-      }
-      System.out.println(" at line " + t1.beginLine + " column " + t1.beginColumn + ">; Expected token: <" + tokenImage[t2] + ">");
-    }
-  }
-
+        /** évaluation de la séquence S-EXPRs à partir du fichier s
+	* @param s : le nom du fichier
+	* @return Sexpr : symbole du nom du fichier.
+	* @throws LispException une erreur de lecture
+	*/
+        /*public static SExpr importe(String s) throws LispException, FileNotFoundException, ParseException
+	{
+	  	in = new FileReader(s);
+	  	
+	    SExpr se= read();
+		return (se);
+	}*/
 }

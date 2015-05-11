@@ -3,7 +3,7 @@
  */
 options
 {
-	DEBUG_PARSER=true;
+	DEBUG_PARSER=false;
 	STATIC=false;
 	//pour regler les problemes de lookahead
 	FORCE_LA_CHECK=false;
@@ -47,26 +47,35 @@ public class Reader
 	public static SExpr read(String s) throws LispException, ParseException
 	{
 	  	in = new StringReader(s);
+	  	
 	  	SExpr se= read();
-	  	return (se);
+	  	try 
+		{in.reset();} 
+		catch (IOException e) 
+		{e.printStackTrace();}
+
+		in = new BufferedReader(new InputStreamReader(System.in));
+		
+	  	return se;
 	}
 	/** évaluation de la séquence S-EXPRs à partir du fichier s
 	* @param s : le nom du fichier
 	* @return Sexpr : symbole du nom du fichier.
 	* @throws LispException une erreur de lecture
 	*/
-	public static SExpr importe(String s) throws LispException, FileNotFoundException, ParseException
+	/*public static SExpr importe(String s) throws LispException, FileNotFoundException, ParseException
 	{
 	  	in = new FileReader(s);
+	  	
 	    SExpr se= read();
 		return (se);
-	}
+	}*/
 }
 PARSER_END(Reader)
 // les caractères ignorés
 SKIP :
 {
- 	" " | "\t" | "\r"
+ 	" " | "\t" | "\r" | "\n"
 	| "\u0000" | "\u0001" | "\u0002" | "\u0003" | "\u0004" | "\u0005" | "\u0006" | "\u0007"
 	| "\u0008" | "\u000B" | "\u000C" | "\u000E" | "\u000F" | "\u0010" | "\u0011" | "\u0012"
 	| "\u0013" | "\u0014" | "\u0015" | "\u0016" | "\u0017" | "\u0018" | "\u0019" | "\u001A"
@@ -87,8 +96,7 @@ TOKEN :
 	<PAROUV:("(")>
 	|<PAREF:(")")>
 	|<POINT:(".")>
-	|<QUOTE:("'")>
-	|<CHAINE:(~[".", "'", "(", ")", " " ])+ >
+	|<CHAINE:(~["(", ")", ".", " "])+ >
 }
   //Définir les lexèmes du langage
 
@@ -97,7 +105,6 @@ SExpr lecture_term() throws LispException:
 {SExpr s;}
 {
 	< PAROUV > {return liste();}	| s= atome() {return s;}
-	| {throw new LispException();}
 }
 
 SExpr liste() throws LispException:
@@ -112,6 +119,6 @@ SExpr liste() throws LispException:
 SExpr atome() throws LispException:
 {Nil n; Token s;}
 {
-  	s= < CHAINE > {return new Symbole(s.image);}
+  	s= < CHAINE > {return new Symbole(s.image);} 
  	| {throw new LispException();} 	  
 }

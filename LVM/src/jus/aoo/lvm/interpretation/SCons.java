@@ -44,32 +44,34 @@ public class SCons implements SList
 	public SExpr eval() 
 	{
 		Fonction f = Context.getFonction(car.toString());
-	  	
+		
 		if (f != null)
 		{	
 			SExpr cdr_temp = cdr;
-			int nbr = 1;
+			int nbr = 0;
 			
 			if (cdr_temp.car() instanceof Symbole && cdr_temp.cdr() instanceof Symbole)
 				Context.addFVar("arg"+nbr, cdr_temp);
 			else
 			{
-
 				while (cdr_temp instanceof SCons)
-				{
+				{		
+					nbr ++;
 					//Liaison des paramètres
 					Context.addFVar("arg"+nbr, cdr_temp.car());
-					nbr ++;
+					
 					cdr_temp = cdr_temp.cdr();
 				}
 				if (cdr_temp instanceof Symbole)
+				{	
+					nbr ++;
 					Context.addFVar("arg"+nbr, cdr_temp);
+				}
 			}
-			
+
 			SExpr result = f.apply();
-			for (int i=1; i <= nbr; i++)
-				Context.delVar("arg"+nbr);
-			
+			for (int i=0; i < nbr; i++)
+				Context.delVar("arg"+(i+1));
 			
 			return result;
 		}

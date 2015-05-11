@@ -11,17 +11,15 @@ public interface ReaderConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int SL_COMMENT = 36;
+  int SL_COMMENT = 37;
   /** RegularExpression Id. */
-  int ML_COMMENT = 37;
+  int ML_COMMENT = 38;
   /** RegularExpression Id. */
-  int PAROUV = 39;
+  int PAROUV = 40;
   /** RegularExpression Id. */
-  int PAREF = 40;
+  int PAREF = 41;
   /** RegularExpression Id. */
-  int POINT = 41;
-  /** RegularExpression Id. */
-  int QUOTE = 42;
+  int POINT = 42;
   /** RegularExpression Id. */
   int CHAINE = 43;
 
@@ -38,6 +36,7 @@ public interface ReaderConstants {
     "\" \"",
     "\"\\t\"",
     "\"\\r\"",
+    "\"\\n\"",
     "\"\\u0000\"",
     "\"\\u0001\"",
     "\"\\u0002\"",
@@ -72,11 +71,10 @@ public interface ReaderConstants {
     "\"/*\"",
     "<SL_COMMENT>",
     "\"*/\"",
-    "<token of kind 38>",
+    "<token of kind 39>",
     "\"(\"",
     "\")\"",
     "\".\"",
-    "\"\\\'\"",
     "<CHAINE>",
   };
 
