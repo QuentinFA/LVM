@@ -85,9 +85,10 @@ TOKEN :
 	|<PAREF:(")")>
 	|<POINT:(".")>
 	|<QUOTE:("'")>
-	|<CHAINE:(~["(", ")", ".", " ", "'"])+ >
+	|<PIPE:("|")>
+	|<CHAINE:(~["(", ")", "|", ".", " ", "'"])+ >
 }
-  //Définir les lexèmes du langage
+//Définir les lexèmes du langage
 
 // les règles de grammaire de ce langage
 SExpr lecture_term() throws LispException:
@@ -108,8 +109,8 @@ SExpr liste() throws LispException:
 SExpr atome() throws LispException:
 {Token s;}
 {
-
   	< QUOTE > {return quote();}
+  	| < PIPE > {return explode();}
  	| s= < CHAINE > {return new Symbole(s.image);}
  	| {throw new LispException();}
 }
@@ -118,4 +119,13 @@ SExpr quote() throws LispException:
 {Token s;}
 {
  	< PAROUV > {return liste();}
- 	| s= < CHAINE > {return new SCons(new Symbole("quote"), new SCons(new Symbole(s.image), Nil.NIL));} }
+ 	| s= < CHAINE > {return new SCons(new Symbole("quote"), new SCons(new Symbole(s.image), Nil.NIL));} 
+	| < PIPE > {return explode();}
+ 	}
+SExpr explode() throws LispException:
+{Token s;}
+{
+ 	< PAROUV > < PAREF > {return new SCons(Nil.NIL, explode());}
+ 	| s= < CHAINE > {return new SCons(new Symbole(s.image), explode());}
+ 	| < PIPE > {return Nil.NIL;}
+}

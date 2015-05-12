@@ -26,7 +26,7 @@ public class Context
 		ctx = new ArrayList<Map<String, SExpr>>();
 		ctx.add(new HashMap<String, SExpr>());
 		ctx.add(new HashMap<String, SExpr>());
-		
+
 		tf = new HashMap<String, Fonction>();
 	}
 	
@@ -38,7 +38,7 @@ public class Context
 	public static SExpr get(String s)
 	{
 		for(int i = ctx.size() - 1; i >= 0; i--)
-			if(ctx.get(i).containsKey(s))
+			if (ctx.get(i).containsKey(s))
 				return ctx.get(i).get(s);
 
 		return null;
@@ -52,10 +52,15 @@ public class Context
 	public static Fonction getFonction(String s)
 	{
 		Fonction d = null;
-		if(tf.containsKey(s))
+		if (tf.containsKey(s))
 			d = tf.get(s);
 		
 		return d;
+	}
+	
+	public static int getNbrParam()
+	{
+		return ctx.get(1).size();
 	}
 	
 	/**
@@ -114,7 +119,7 @@ public class Context
 		while(i >= 0 && ctx.get(i).get(s) == null)
 			i--;
 		
-		if (i < 0)
+		if (i <= 1)
 			return;
 		
 		ctx.get(i).remove(s);

@@ -1,6 +1,7 @@
 package jus.aoo.lvm.interpretation.FSUBR;
+import java.util.ArrayList;
+
 import jus.aoo.lvm.environment.Context;
-import jus.aoo.lvm.interpretation.FSubr;
 import jus.aoo.lvm.interpretation.*;
 
 
@@ -16,20 +17,22 @@ public class COND extends FSubr
 	 */
 	public SExpr apply() {
 		
-		SExpr arg1 = eval_arg(Context.get("arg1"));
-		SExpr cond = (arg1.car()).eval();
-		SExpr condTrue = arg1.cdr();
+		ArrayList<SExpr> args = new ArrayList<SExpr>();
+		for (int i=0; i < Context.getNbrParam(); i++)
+			args.add(eval_arg(Context.get("arg"+(i+1))));
+		
+		for (int i=0; i < Context.getNbrParam(); i++)
+		{
+			if ((args.get(i).car().eval()).equals(Symbole.TRUE))
+				return args.get(i).cdr().eval();
+		}
 
-		SExpr condFalse = eval_arg(Context.get("arg2"));
-		if (cond.equals(Symbole.TRUE))
-			return condTrue;
-		else
-			return condFalse;
+		return Nil.NIL;
 	}
 
 	@Override
 	public int getNbr_arg() {
-		return 2;
+		return -1;
 	}
 
 }

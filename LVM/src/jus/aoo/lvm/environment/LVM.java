@@ -34,6 +34,9 @@ public class LVM {
 		Context.addFonction("eval", new EVAL());
 		Context.addFonction("cond", new COND());
 		Context.addFonction("set", new SET());
+		Context.addFonction("typefn", new TYPEFN());
+		Context.addFonction("implode", new IMPLODE());
+		Context.addFonction("explode", new EXPLODE());
 	}
 	
 	/**

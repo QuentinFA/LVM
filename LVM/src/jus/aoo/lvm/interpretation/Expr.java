@@ -1,12 +1,14 @@
 package jus.aoo.lvm.interpretation;
 
 import java.util.HashMap;
+
 import jus.aoo.lvm.environment.Context;
 
 public class Expr extends Foncteur
 {
-	public Expr(SExpr arg)
+	public Expr(String s, SExpr arg)
 	{
+		str = s;
 		recup_arg(arg);
 	}
 	

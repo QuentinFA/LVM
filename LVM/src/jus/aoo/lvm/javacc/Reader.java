@@ -42,7 +42,7 @@ public class Reader implements ReaderConstants {
                 return se;
         }
 
-  //Définir les lexèmes du langage
+//Définir les lexèmes du langage
 
 // les règles de grammaire de ce langage
   final public SExpr lecture_term() throws ParseException, LispException {
@@ -92,6 +92,10 @@ public class Reader implements ReaderConstants {
       jj_consume_token(QUOTE);
                    {if (true) return quote();}
       break;
+    case PIPE:
+      jj_consume_token(PIPE);
+                    {if (true) return explode();}
+      break;
     case CHAINE:
       s = jj_consume_token(CHAINE);
                          {if (true) return new Symbole(s.image);}
@@ -114,8 +118,36 @@ public class Reader implements ReaderConstants {
       s = jj_consume_token(CHAINE);
                          {if (true) return new SCons(new Symbole("quote"), new SCons(new Symbole(s.image), Nil.NIL));}
       break;
+    case PIPE:
+      jj_consume_token(PIPE);
+                    {if (true) return explode();}
+      break;
     default:
       jj_la1[3] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+    throw new Error("Missing return statement in function");
+  }
+
+  final public SExpr explode() throws ParseException, LispException {
+ Token s;
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case PAROUV:
+      jj_consume_token(PAROUV);
+      jj_consume_token(PAREF);
+                              {if (true) return new SCons(Nil.NIL, explode());}
+      break;
+    case CHAINE:
+      s = jj_consume_token(CHAINE);
+                         {if (true) return new SCons(new Symbole(s.image), explode());}
+      break;
+    case PIPE:
+      jj_consume_token(PIPE);
+                    {if (true) return Nil.NIL;}
+      break;
+    default:
+      jj_la1[4] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -131,7 +163,7 @@ public class Reader implements ReaderConstants {
   public Token jj_nt;
   private int jj_ntk;
   private int jj_gen;
-  final private int[] jj_la1 = new int[4];
+  final private int[] jj_la1 = new int[5];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static {
@@ -139,10 +171,10 @@ public class Reader implements ReaderConstants {
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x0,0x0,0x0,0x0,};
+      jj_la1_0 = new int[] {0x0,0x0,0x0,0x0,0x0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x100,0x700,0x1800,0x1100,};
+      jj_la1_1 = new int[] {0x100,0x700,0x3800,0x3100,0x3100,};
    }
 
   /** Constructor with InputStream. */
@@ -156,7 +188,7 @@ public class Reader implements ReaderConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 5; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -170,7 +202,7 @@ public class Reader implements ReaderConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 5; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -180,7 +212,7 @@ public class Reader implements ReaderConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 5; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -190,7 +222,7 @@ public class Reader implements ReaderConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 5; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -199,7 +231,7 @@ public class Reader implements ReaderConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 5; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -208,7 +240,7 @@ public class Reader implements ReaderConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 5; i++) jj_la1[i] = -1;
   }
 
   private Token jj_consume_token(int kind) throws ParseException {
@@ -259,12 +291,12 @@ public class Reader implements ReaderConstants {
   /** Generate ParseException. */
   public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[45];
+    boolean[] la1tokens = new boolean[46];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 5; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -276,7 +308,7 @@ public class Reader implements ReaderConstants {
         }
       }
     }
-    for (int i = 0; i < 45; i++) {
+    for (int i = 0; i < 46; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

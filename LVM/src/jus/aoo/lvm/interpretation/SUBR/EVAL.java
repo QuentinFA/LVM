@@ -10,10 +10,6 @@ public class EVAL extends Subr
 		str = "eval";
 	}
 	
-	/**Applique la primitive CDR à arg
-	 * @return cdr arg
-	 * @param SExpr arg
-	 */
 	public SExpr apply() throws LispException {
 		SExpr arg = eval_arg(Context.get("arg1"));
 					

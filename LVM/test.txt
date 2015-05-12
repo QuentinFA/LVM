@@ -1,5 +1,5 @@
-(de false () ())
-(de true () t)
+(set false ())
+(set true t)
 (de null (l) (eq l nil))
 (de not (a) (cond (a nil) (t t)))
 (de atomp (a) (atom a))

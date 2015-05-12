@@ -8,6 +8,7 @@ public abstract class Foncteur implements Fonction
 	protected SExpr definition;
 	protected ArrayList<String> args;
 	protected HashMap<String, SExpr> tf;
+	protected String str;
 	
 	public int getNbr_arg() {return args.size();}
 	
@@ -28,7 +29,8 @@ public abstract class Foncteur implements Fonction
 			{
 				while (cdr_temp instanceof SCons)
 				{
-					args.add(cdr_temp.car().toString());
+					if (!(cdr_temp.car() instanceof Nil))
+							args.add(cdr_temp.car().toString());
 					cdr_temp = cdr_temp.cdr();
 				}
 				if (cdr_temp instanceof Symbole)
@@ -57,5 +59,10 @@ public abstract class Foncteur implements Fonction
 			else
 				return new SCons(s1, s2);
 		}
+	}
+	
+	public String toString()
+	{
+		return str;
 	}
 }

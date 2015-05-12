@@ -49,6 +49,7 @@ public class SCons implements SList
 		{	
 			
 			int nbrMax = f.getNbr_arg(); //Nombre d'argments à récupérer
+										//-1 si illimité (cond)
 			
 			//Récupérer les arguments
 			SExpr cdr_temp = cdr;
@@ -57,7 +58,7 @@ public class SCons implements SList
 			if (cdr_temp.car() instanceof Symbole && cdr_temp.cdr() instanceof Symbole) // (a.a)
 			{
 				nbr ++;
-				if (nbr > nbrMax) throw new LispException("Trop d'arguments dans " + f.toString() +"...");
+				if (nbrMax != -1 && nbr > nbrMax) throw new LispException("Trop d'arguments dans " + f.toString() +"...");
 				Context.addFVar("arg"+nbr, cdr_temp);
 			}
 			else
@@ -65,7 +66,7 @@ public class SCons implements SList
 				while (cdr_temp instanceof SCons) //Argument
 				{		
 					nbr ++;
-					if (nbr > nbrMax) throw new LispException("Trop d'arguments dans " + f.toString() +"...");
+					if (nbrMax != -1 && nbr > nbrMax) throw new LispException("Trop d'arguments dans " + f.toString() +"...");
 					Context.addFVar("arg"+nbr, cdr_temp.car());
 					
 					cdr_temp = cdr_temp.cdr();
@@ -73,12 +74,12 @@ public class SCons implements SList
 				if (cdr_temp instanceof Symbole) // (    .a)
 				{	
 					nbr ++;
-					if (nbr > nbrMax) throw new LispException("Trop d'arguments dans " + f.toString() +"...");
+					if (nbrMax != -1 && nbr > nbrMax) throw new LispException("Trop d'arguments dans " + f.toString() +"...");
 					Context.addFVar("arg"+nbr, cdr_temp);
 				}
 			}
 			
-			if (nbr != nbrMax) throw new LispException("Pas assez d'arguments dans " + f.toString() +"...");
+			if (nbrMax != -1 && nbr != nbrMax) throw new LispException("Pas assez d'arguments dans " + f.toString() +"...");
 			
 			SExpr result = f.apply(); //Appliquer Fonction
 			for (int i=0; i < nbr; i++) //Supprimer arguments

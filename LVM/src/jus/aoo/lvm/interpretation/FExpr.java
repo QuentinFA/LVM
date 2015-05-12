@@ -5,8 +5,9 @@ import jus.aoo.lvm.environment.Context;
 
 public class FExpr extends Foncteur
 {
-	public FExpr(SExpr arg)
+	public FExpr(String s, SExpr arg)
 	{
+		str = s;
 		recup_arg(arg);
 	}
 	@Override
